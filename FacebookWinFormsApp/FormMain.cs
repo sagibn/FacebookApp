@@ -13,13 +13,15 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        public FormMain()
+        private LoginResult m_LoginResult;
+        private User m_User;
+        public FormMain(LoginResult i_loginResult, User i_user)
         {
+            m_LoginResult = i_loginResult;
+            m_User = i_user;
             InitializeComponent();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            FacebookService.s_CollectionLimit = 25;
         }
-
-        FacebookWrapper.LoginResult m_LoginResult;
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -37,18 +39,38 @@ namespace BasicFacebookFeatures
                 "855104489457424",
                 /// requested permissions:
                 "email",
-                "public_profile"
-                /// add any relevant permissions
-                );
+                "public_profile",
+                "user_age_range",
+                "user_birthday",
+                "user_events",
+                "user_friends",
+                "user_gender",
+                "user_hometown",
+                "user_likes",
+                "user_link",
+                "user_location",
+                "user_photos",
+                "user_posts",
+                "user_videos");
 
             if (m_LoginResult.AccessToken != null && string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
             {
+                m_User = m_LoginResult.LoggedInUser;
                 buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
                 buttonLogin.BackColor = Color.LightGreen;
                 pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
                 buttonLogin.Enabled = false;
                 buttonLogout.Enabled = true;
             }
+            else
+            {
+                m_LoginResult = null;
+            }
+        }
+
+        private void mustLoginMessage()
+        {
+            MessageBox.Show("Must login to use this feature", "Error", MessageBoxButtons.OK);
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -57,6 +79,7 @@ namespace BasicFacebookFeatures
             buttonLogin.Text = "Login";
             buttonLogin.BackColor = buttonLogout.BackColor;
             m_LoginResult = null;
+            m_User = null;
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
         }
@@ -79,6 +102,140 @@ namespace BasicFacebookFeatures
         private void button4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void emailButton_Click(object sender, EventArgs e)
+        {
+            if(m_User != null)
+            {
+                string response = EmailSender.EmailSender.SendEmail(m_User.Email, textBoxEmailSubject.Text, textBoxEmailBody.Text);
+                MessageBox.Show(response, "Message", MessageBoxButtons.OK);
+                textBoxEmailSubject.Text = "--subject--";
+                textBoxEmailBody.Text = "--write your message here--";
+            }
+            else
+            {
+                mustLoginMessage();
+            }
+        }
+
+        private void buttonGroups_Click(object sender, EventArgs e)
+        {
+            listBoxGroups.Items.Clear();
+            listBoxGroups.DisplayMember = "Name";
+
+            try
+            {
+                if(m_User != null)
+                {
+                    foreach (Group group in m_User.Groups)
+                    {
+                        listBoxGroups.Items.Add(group);
+                    }
+
+                    if (listBoxGroups.Items.Count == 0)
+                    {
+                        MessageBox.Show("No groups available", "Error", MessageBoxButtons.OK);
+                    }
+                }
+                else
+                {
+                    mustLoginMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxGroups.SelectedItems.Count == 1)
+            {
+                Group selectedGroup = listBoxGroups.SelectedItem as Group;
+                pictureBoxGroups.LoadAsync(selectedGroup.PictureNormalURL);
+            }
+        }
+
+        private void buttonAlbums_Click(object sender, EventArgs e)
+        {
+            listBoxAlbums.Items.Clear();
+            listBoxAlbums.DisplayMember = "Name";
+
+            try
+            {
+                if (m_User != null)
+                {
+                    foreach (Album album in m_User.Albums)
+                    {
+                        listBoxAlbums.Items.Add(album);
+                    }
+
+                    if (listBoxAlbums.Items.Count == 0)
+                    {
+                        MessageBox.Show("No Albums available", "Error", MessageBoxButtons.OK);
+                    }
+                }
+                else
+                {
+                    mustLoginMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private void listBoxAlbums_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxAlbums.SelectedItems.Count == 1)
+            {
+                Album selectedAlbum = listBoxAlbums.SelectedItem as Album;
+                if (selectedAlbum.PictureAlbumURL != null)
+                {
+                    pictureBoxAlbums.LoadAsync(selectedAlbum.PictureAlbumURL);
+                }
+            }
+        }
+
+        private void buttonSortAlbums_Click(object sender, EventArgs e)
+        {
+            listBoxAlbums.Items.Clear();
+            listBoxAlbums.DisplayMember = "Name";
+
+            try
+            {
+                if (m_User != null)
+                {
+
+                    List<Album> sortedAlbums = m_User.Albums.OrderBy(album => album.CreatedTime).ToList();
+
+                    foreach (Album album in sortedAlbums)
+                    {
+                        listBoxAlbums.Items.Add(album);
+                    }
+                }
+                else
+                {
+                    mustLoginMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
         }
     }
 }
