@@ -60,7 +60,7 @@
             this.buttonLogout.BackColor = System.Drawing.Color.Red;
             this.buttonLogout.Enabled = false;
             this.buttonLogout.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonLogout.Location = new System.Drawing.Point(1133, 0);
+            this.buttonLogout.Location = new System.Drawing.Point(1136, 0);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(99, 39);
@@ -174,7 +174,7 @@
             // facebookLogo
             // 
             this.facebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
-            this.facebookLogo.Location = new System.Drawing.Point(1102, 86);
+            this.facebookLogo.Location = new System.Drawing.Point(1105, 46);
             this.facebookLogo.Name = "facebookLogo";
             this.facebookLogo.Size = new System.Drawing.Size(130, 130);
             this.facebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
