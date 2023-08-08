@@ -20,52 +20,9 @@ namespace BasicFacebookFeatures
             m_LoginResult = i_loginResult;
             m_User = i_user;
             InitializeComponent();
+            pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+            buttonLogout.Enabled = true;
             FacebookService.s_CollectionLimit = 25;
-        }
-
-        private void buttonLogin_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText("design.patterns");
-
-            if (m_LoginResult == null)
-            {
-                login();
-            }
-        }
-
-        private void login()
-        {
-            m_LoginResult = FacebookService.Login(
-                "855104489457424",
-                /// requested permissions:
-                "email",
-                "public_profile",
-                "user_age_range",
-                "user_birthday",
-                "user_events",
-                "user_friends",
-                "user_gender",
-                "user_hometown",
-                "user_likes",
-                "user_link",
-                "user_location",
-                "user_photos",
-                "user_posts",
-                "user_videos");
-
-            if (m_LoginResult.AccessToken != null && string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
-            {
-                m_User = m_LoginResult.LoggedInUser;
-                buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
-                buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-                buttonLogin.Enabled = false;
-                buttonLogout.Enabled = true;
-            }
-            else
-            {
-                m_LoginResult = null;
-            }
         }
 
         private void mustLoginMessage()
@@ -76,12 +33,11 @@ namespace BasicFacebookFeatures
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             FacebookService.LogoutWithUI();
-            buttonLogin.Text = "Login";
-            buttonLogin.BackColor = buttonLogout.BackColor;
             m_LoginResult = null;
             m_User = null;
-            buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
+            this.Close();
+
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -109,9 +65,34 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonFriends_Click(object sender, EventArgs e)
         {
+            listBoxFriends.Items.Clear();
+            listBoxFriends.DisplayMember = "Name";
 
+            try
+            {
+                if (m_User != null)
+                {
+                    foreach (User friend in m_User.Friends)
+                    {
+                        listBoxGroups.Items.Add(friend.FirstName);
+                    }
+
+                    if (listBoxFriends.Items.Count == 0)
+                    {
+                        MessageBox.Show("No friends available", "Error", MessageBoxButtons.OK);
+                    }
+                }
+                else
+                {
+                    mustLoginMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
         }
 
         private void emailButton_Click(object sender, EventArgs e)

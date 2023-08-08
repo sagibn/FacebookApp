@@ -51,9 +51,8 @@ namespace BasicFacebookFeatures
                 User user = loginResult.LoggedInUser;
                 FormMain form = new FormMain(loginResult, user);
 
-                this.Hide();
+                //this.Hide();
                 form.ShowDialog();
-                this.Close();
             }
         }
     }

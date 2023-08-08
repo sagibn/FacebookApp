@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSortAlbums = new System.Windows.Forms.TabPage();
@@ -40,9 +39,8 @@
             this.pictureBoxAlbums = new System.Windows.Forms.PictureBox();
             this.pictureBoxGroups = new System.Windows.Forms.PictureBox();
             this.facebookLogo = new System.Windows.Forms.PictureBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.buttonFriends = new System.Windows.Forms.Button();
+            this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.buttonAlbums = new System.Windows.Forms.Button();
             this.listBoxAlbums = new System.Windows.Forms.ListBox();
             this.buttonGroups = new System.Windows.Forms.Button();
@@ -57,27 +55,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.SuspendLayout();
             // 
-            // buttonLogin
-            // 
-            this.buttonLogin.Location = new System.Drawing.Point(18, 15);
-            this.buttonLogin.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(99, 39);
-            this.buttonLogin.TabIndex = 36;
-            this.buttonLogin.Text = "Login";
-            this.buttonLogin.UseVisualStyleBackColor = true;
-            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
-            // 
             // buttonLogout
             // 
+            this.buttonLogout.BackColor = System.Drawing.Color.Red;
             this.buttonLogout.Enabled = false;
-            this.buttonLogout.Location = new System.Drawing.Point(136, 15);
+            this.buttonLogout.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonLogout.Location = new System.Drawing.Point(1133, 0);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(99, 39);
             this.buttonLogout.TabIndex = 52;
             this.buttonLogout.Text = "Logout";
-            this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.UseVisualStyleBackColor = false;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // tabControl1
@@ -101,16 +90,14 @@
             this.tabSortAlbums.Controls.Add(this.pictureBoxAlbums);
             this.tabSortAlbums.Controls.Add(this.pictureBoxGroups);
             this.tabSortAlbums.Controls.Add(this.facebookLogo);
-            this.tabSortAlbums.Controls.Add(this.button4);
-            this.tabSortAlbums.Controls.Add(this.button3);
-            this.tabSortAlbums.Controls.Add(this.listBox4);
+            this.tabSortAlbums.Controls.Add(this.buttonFriends);
+            this.tabSortAlbums.Controls.Add(this.listBoxFriends);
             this.tabSortAlbums.Controls.Add(this.buttonAlbums);
             this.tabSortAlbums.Controls.Add(this.listBoxAlbums);
             this.tabSortAlbums.Controls.Add(this.buttonGroups);
             this.tabSortAlbums.Controls.Add(this.listBoxGroups);
             this.tabSortAlbums.Controls.Add(this.pictureBoxProfile);
             this.tabSortAlbums.Controls.Add(this.buttonLogout);
-            this.tabSortAlbums.Controls.Add(this.buttonLogin);
             this.tabSortAlbums.Location = new System.Drawing.Point(4, 35);
             this.tabSortAlbums.Name = "tabSortAlbums";
             this.tabSortAlbums.Padding = new System.Windows.Forms.Padding(3);
@@ -132,7 +119,7 @@
             // 
             // buttonEmail
             // 
-            this.buttonEmail.Location = new System.Drawing.Point(594, 150);
+            this.buttonEmail.Location = new System.Drawing.Point(594, 190);
             this.buttonEmail.Name = "buttonEmail";
             this.buttonEmail.Size = new System.Drawing.Size(367, 39);
             this.buttonEmail.TabIndex = 68;
@@ -142,7 +129,7 @@
             // 
             // textBoxEmailBody
             // 
-            this.textBoxEmailBody.Location = new System.Drawing.Point(305, 63);
+            this.textBoxEmailBody.Location = new System.Drawing.Point(305, 103);
             this.textBoxEmailBody.Multiline = true;
             this.textBoxEmailBody.Name = "textBoxEmailBody";
             this.textBoxEmailBody.Size = new System.Drawing.Size(656, 126);
@@ -151,7 +138,7 @@
             // 
             // textBoxEmailSubject
             // 
-            this.textBoxEmailSubject.Location = new System.Drawing.Point(305, 22);
+            this.textBoxEmailSubject.Location = new System.Drawing.Point(305, 65);
             this.textBoxEmailSubject.Name = "textBoxEmailSubject";
             this.textBoxEmailSubject.Size = new System.Drawing.Size(242, 32);
             this.textBoxEmailSubject.TabIndex = 69;
@@ -187,42 +174,32 @@
             // facebookLogo
             // 
             this.facebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
-            this.facebookLogo.Location = new System.Drawing.Point(1105, 0);
+            this.facebookLogo.Location = new System.Drawing.Point(1102, 86);
             this.facebookLogo.Name = "facebookLogo";
             this.facebookLogo.Size = new System.Drawing.Size(130, 130);
             this.facebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.facebookLogo.TabIndex = 64;
             this.facebookLogo.TabStop = false;
             // 
-            // button4
+            // buttonFriends
             // 
-            this.button4.Location = new System.Drawing.Point(58, 61);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(132, 36);
-            this.button4.TabIndex = 63;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.buttonFriends.Location = new System.Drawing.Point(722, 261);
+            this.buttonFriends.Name = "buttonFriends";
+            this.buttonFriends.Size = new System.Drawing.Size(153, 35);
+            this.buttonFriends.TabIndex = 62;
+            this.buttonFriends.Text = "Fetch Friends";
+            this.buttonFriends.UseVisualStyleBackColor = true;
+            this.buttonFriends.Click += new System.EventHandler(this.buttonFriends_Click);
             // 
-            // button3
+            // listBoxFriends
             // 
-            this.button3.Location = new System.Drawing.Point(722, 261);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(124, 35);
-            this.button3.TabIndex = 62;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // listBox4
-            // 
-            this.listBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox4.FormattingEnabled = true;
-            this.listBox4.ItemHeight = 26;
-            this.listBox4.Location = new System.Drawing.Point(722, 302);
-            this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(295, 160);
-            this.listBox4.TabIndex = 61;
+            this.listBoxFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxFriends.FormattingEnabled = true;
+            this.listBoxFriends.ItemHeight = 26;
+            this.listBoxFriends.Location = new System.Drawing.Point(722, 302);
+            this.listBoxFriends.Name = "listBoxFriends";
+            this.listBoxFriends.Size = new System.Drawing.Size(295, 160);
+            this.listBoxFriends.TabIndex = 61;
             // 
             // buttonAlbums
             // 
@@ -298,15 +275,12 @@
         }
 
 		#endregion
-
-		private System.Windows.Forms.Button buttonLogin;
 		private System.Windows.Forms.Button buttonLogout;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabSortAlbums;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ListBox listBox4;
+        private System.Windows.Forms.Button buttonFriends;
+        private System.Windows.Forms.ListBox listBoxFriends;
         private System.Windows.Forms.Button buttonAlbums;
         private System.Windows.Forms.ListBox listBoxAlbums;
         private System.Windows.Forms.Button buttonGroups;

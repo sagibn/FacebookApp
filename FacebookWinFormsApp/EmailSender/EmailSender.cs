@@ -10,8 +10,8 @@ namespace BasicFacebookFeatures.EmailSender
         {
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
-            string senderEmail = "sagi838@gmail.com";
-            string senderPassword = "hqygllrzkyeewtmy";
+            string senderEmail = "desigpatter57@gmail.com";
+            string senderPassword = "qeoizhtqipjlywyv";
             string message;
 
             try
