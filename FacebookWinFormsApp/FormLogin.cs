@@ -14,21 +14,37 @@ namespace BasicFacebookFeatures
 {
     public partial class FormLogin : Form
     {
+        private LoginResult m_LoginResult;
+        private User m_User;
         public FormLogin()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+            Settings settings = Settings.Instance;
+
+            if (settings.RememberUser && !string.IsNullOrEmpty(settings.UserAccessToken))
+            {
+                try
+                {
+                    m_LoginResult = FacebookService.Connect(settings.UserAccessToken);
+                    activateMainForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"{ex.Message}.\nPlease login manually.", "Error", MessageBoxButtons.OK);
+                }
+            }
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             Clipboard.SetText("design.patterns");
             login();
-            
         }
 
         private void login()
         {
-            LoginResult loginResult = FacebookService.Login(
+            m_LoginResult = FacebookService.Login(
                 "855104489457424",
                 /// requested permissions:
                 "email",
@@ -46,10 +62,15 @@ namespace BasicFacebookFeatures
                 "user_posts",
                 "user_videos");
 
-            if (loginResult.AccessToken != null && string.IsNullOrEmpty(loginResult.ErrorMessage))
+            activateMainForm();
+        }
+
+        private void activateMainForm()
+        {
+            if (m_LoginResult.AccessToken != null && string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
             {
-                User user = loginResult.LoggedInUser;
-                FormMain form = new FormMain(loginResult, user);
+                m_User = m_LoginResult.LoggedInUser;
+                FormMain form = new FormMain(m_LoginResult, m_User);
 
                 //this.Hide();
                 form.ShowDialog();

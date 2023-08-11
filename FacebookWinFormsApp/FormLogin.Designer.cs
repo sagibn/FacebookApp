@@ -65,7 +65,7 @@ namespace BasicFacebookFeatures
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.pictureBoxBackGround);
             this.Name = "FormLogin";
-            this.Text = "LoginForm";
+            this.Text = "Login";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBackGround)).EndInit();
             this.ResumeLayout(false);
 

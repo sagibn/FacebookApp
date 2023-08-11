@@ -30,7 +30,8 @@
         {
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabSortAlbums = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
             this.buttonSortAlbums = new System.Windows.Forms.Button();
             this.buttonEmail = new System.Windows.Forms.Button();
             this.textBoxEmailBody = new System.Windows.Forms.TextBox();
@@ -46,13 +47,21 @@
             this.buttonGroups = new System.Windows.Forms.Button();
             this.listBoxGroups = new System.Windows.Forms.ListBox();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
+            this.textBoxEmailSender = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonLikedFriends = new System.Windows.Forms.Button();
+            this.listBoxLikedFriends = new System.Windows.Forms.ListBox();
+            this.buttonPosts = new System.Windows.Forms.Button();
+            this.listBoxPosts = new System.Windows.Forms.ListBox();
+            this.labelData = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
-            this.tabSortAlbums.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAlbums)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonLogout
@@ -71,7 +80,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabSortAlbums);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -79,32 +89,43 @@
             this.tabControl1.Size = new System.Drawing.Size(1243, 697);
             this.tabControl1.TabIndex = 54;
             // 
-            // tabSortAlbums
+            // tabPage1
             // 
-            this.tabSortAlbums.BackColor = System.Drawing.Color.Transparent;
-            this.tabSortAlbums.Controls.Add(this.buttonSortAlbums);
-            this.tabSortAlbums.Controls.Add(this.buttonEmail);
-            this.tabSortAlbums.Controls.Add(this.textBoxEmailBody);
-            this.tabSortAlbums.Controls.Add(this.textBoxEmailSubject);
-            this.tabSortAlbums.Controls.Add(this.pictureBox3);
-            this.tabSortAlbums.Controls.Add(this.pictureBoxAlbums);
-            this.tabSortAlbums.Controls.Add(this.pictureBoxGroups);
-            this.tabSortAlbums.Controls.Add(this.facebookLogo);
-            this.tabSortAlbums.Controls.Add(this.buttonFriends);
-            this.tabSortAlbums.Controls.Add(this.listBoxFriends);
-            this.tabSortAlbums.Controls.Add(this.buttonAlbums);
-            this.tabSortAlbums.Controls.Add(this.listBoxAlbums);
-            this.tabSortAlbums.Controls.Add(this.buttonGroups);
-            this.tabSortAlbums.Controls.Add(this.listBoxGroups);
-            this.tabSortAlbums.Controls.Add(this.pictureBoxProfile);
-            this.tabSortAlbums.Controls.Add(this.buttonLogout);
-            this.tabSortAlbums.Location = new System.Drawing.Point(4, 35);
-            this.tabSortAlbums.Name = "tabSortAlbums";
-            this.tabSortAlbums.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSortAlbums.Size = new System.Drawing.Size(1235, 658);
-            this.tabSortAlbums.TabIndex = 0;
-            this.tabSortAlbums.Text = "tabPage1";
-            this.tabSortAlbums.Click += new System.EventHandler(this.tabPage1_Click);
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.checkBoxRememberMe);
+            this.tabPage1.Controls.Add(this.buttonSortAlbums);
+            this.tabPage1.Controls.Add(this.buttonEmail);
+            this.tabPage1.Controls.Add(this.textBoxEmailBody);
+            this.tabPage1.Controls.Add(this.textBoxEmailSubject);
+            this.tabPage1.Controls.Add(this.pictureBox3);
+            this.tabPage1.Controls.Add(this.pictureBoxAlbums);
+            this.tabPage1.Controls.Add(this.pictureBoxGroups);
+            this.tabPage1.Controls.Add(this.facebookLogo);
+            this.tabPage1.Controls.Add(this.buttonFriends);
+            this.tabPage1.Controls.Add(this.listBoxFriends);
+            this.tabPage1.Controls.Add(this.buttonAlbums);
+            this.tabPage1.Controls.Add(this.listBoxAlbums);
+            this.tabPage1.Controls.Add(this.buttonGroups);
+            this.tabPage1.Controls.Add(this.listBoxGroups);
+            this.tabPage1.Controls.Add(this.pictureBoxProfile);
+            this.tabPage1.Controls.Add(this.buttonLogout);
+            this.tabPage1.Controls.Add(this.textBoxEmailSender);
+            this.tabPage1.Location = new System.Drawing.Point(4, 35);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1235, 658);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            // 
+            // checkBoxRememberMe
+            // 
+            this.checkBoxRememberMe.AutoSize = true;
+            this.checkBoxRememberMe.Location = new System.Drawing.Point(18, 14);
+            this.checkBoxRememberMe.Name = "checkBoxRememberMe";
+            this.checkBoxRememberMe.Size = new System.Drawing.Size(184, 30);
+            this.checkBoxRememberMe.TabIndex = 72;
+            this.checkBoxRememberMe.Text = "Remember me";
+            this.checkBoxRememberMe.UseVisualStyleBackColor = true;
             // 
             // buttonSortAlbums
             // 
@@ -119,12 +140,13 @@
             // 
             // buttonEmail
             // 
-            this.buttonEmail.Location = new System.Drawing.Point(594, 190);
+            this.buttonEmail.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.buttonEmail.Location = new System.Drawing.Point(858, 190);
             this.buttonEmail.Name = "buttonEmail";
-            this.buttonEmail.Size = new System.Drawing.Size(367, 39);
+            this.buttonEmail.Size = new System.Drawing.Size(103, 39);
             this.buttonEmail.TabIndex = 68;
-            this.buttonEmail.Text = "click here to send Email to yourself";
-            this.buttonEmail.UseVisualStyleBackColor = true;
+            this.buttonEmail.Text = "Send\r\n";
+            this.buttonEmail.UseVisualStyleBackColor = false;
             this.buttonEmail.Click += new System.EventHandler(this.emailButton_Click);
             // 
             // textBoxEmailBody
@@ -250,6 +272,78 @@
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
             // 
+            // textBoxEmailSender
+            // 
+            this.textBoxEmailSender.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.textBoxEmailSender.Location = new System.Drawing.Point(305, 14);
+            this.textBoxEmailSender.Multiline = true;
+            this.textBoxEmailSender.Name = "textBoxEmailSender";
+            this.textBoxEmailSender.Size = new System.Drawing.Size(656, 215);
+            this.textBoxEmailSender.TabIndex = 73;
+            this.textBoxEmailSender.Text = "                                         Email Reminder";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.labelData);
+            this.tabPage2.Controls.Add(this.buttonLikedFriends);
+            this.tabPage2.Controls.Add(this.listBoxLikedFriends);
+            this.tabPage2.Controls.Add(this.buttonPosts);
+            this.tabPage2.Controls.Add(this.listBoxPosts);
+            this.tabPage2.Location = new System.Drawing.Point(4, 35);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(1235, 658);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonLikedFriends
+            // 
+            this.buttonLikedFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLikedFriends.Location = new System.Drawing.Point(817, 33);
+            this.buttonLikedFriends.Name = "buttonLikedFriends";
+            this.buttonLikedFriends.Size = new System.Drawing.Size(238, 35);
+            this.buttonLikedFriends.TabIndex = 63;
+            this.buttonLikedFriends.Text = "Show your most supporters";
+            this.buttonLikedFriends.UseVisualStyleBackColor = true;
+            this.buttonLikedFriends.Click += new System.EventHandler(this.buttonLikedFriends_Click);
+            // 
+            // listBoxLikedFriends
+            // 
+            this.listBoxLikedFriends.FormattingEnabled = true;
+            this.listBoxLikedFriends.ItemHeight = 26;
+            this.listBoxLikedFriends.Location = new System.Drawing.Point(817, 74);
+            this.listBoxLikedFriends.Name = "listBoxLikedFriends";
+            this.listBoxLikedFriends.Size = new System.Drawing.Size(238, 186);
+            this.listBoxLikedFriends.TabIndex = 62;
+            // 
+            // buttonPosts
+            // 
+            this.buttonPosts.Location = new System.Drawing.Point(314, 33);
+            this.buttonPosts.Name = "buttonPosts";
+            this.buttonPosts.Size = new System.Drawing.Size(193, 35);
+            this.buttonPosts.TabIndex = 61;
+            this.buttonPosts.Text = "Show my posts";
+            this.buttonPosts.UseVisualStyleBackColor = true;
+            this.buttonPosts.Click += new System.EventHandler(this.buttonPosts_Click);
+            // 
+            // listBoxPosts
+            // 
+            this.listBoxPosts.FormattingEnabled = true;
+            this.listBoxPosts.ItemHeight = 26;
+            this.listBoxPosts.Location = new System.Drawing.Point(314, 74);
+            this.listBoxPosts.Name = "listBoxPosts";
+            this.listBoxPosts.Size = new System.Drawing.Size(443, 186);
+            this.listBoxPosts.TabIndex = 0;
+            // 
+            // labelData
+            // 
+            this.labelData.AutoSize = true;
+            this.labelData.Location = new System.Drawing.Point(3, 42);
+            this.labelData.Name = "labelData";
+            this.labelData.Size = new System.Drawing.Size(194, 26);
+            this.labelData.TabIndex = 64;
+            this.labelData.Text = "Data about myself:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
@@ -260,16 +354,17 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Text = "Connecting...";
             this.tabControl1.ResumeLayout(false);
-            this.tabSortAlbums.ResumeLayout(false);
-            this.tabSortAlbums.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAlbums)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGroups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -277,7 +372,7 @@
 		#endregion
 		private System.Windows.Forms.Button buttonLogout;
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabSortAlbums;
+		private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Button buttonFriends;
         private System.Windows.Forms.ListBox listBoxFriends;
@@ -293,6 +388,14 @@
         private System.Windows.Forms.PictureBox pictureBoxAlbums;
         private System.Windows.Forms.PictureBox pictureBoxGroups;
         private System.Windows.Forms.Button buttonSortAlbums;
+        private System.Windows.Forms.CheckBox checkBoxRememberMe;
+        private System.Windows.Forms.TextBox textBoxEmailSender;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button buttonPosts;
+        private System.Windows.Forms.ListBox listBoxPosts;
+        private System.Windows.Forms.Button buttonLikedFriends;
+        private System.Windows.Forms.ListBox listBoxLikedFriends;
+        private System.Windows.Forms.Label labelData;
     }
 }
 

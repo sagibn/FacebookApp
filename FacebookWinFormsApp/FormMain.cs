@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
+using System.Threading;
 
 namespace BasicFacebookFeatures
 {
@@ -15,14 +16,57 @@ namespace BasicFacebookFeatures
     {
         private LoginResult m_LoginResult;
         private User m_User;
+        private Settings m_Settings;
         public FormMain(LoginResult i_loginResult, User i_user)
         {
             m_LoginResult = i_loginResult;
             m_User = i_user;
+            m_Settings = Settings.Instance;
+            this.Size = m_Settings.LastWindowSize;
             InitializeComponent();
-            pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+            this.checkBoxRememberMe.Checked = m_Settings.RememberUser;
+        }
+
+        private void completeUIFromFacebookData()
+        {
             buttonLogout.Enabled = true;
             FacebookService.s_CollectionLimit = 25;
+            this.Text = $"Connected as { m_User.Name}";
+            pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+            fetchAlbums();
+            fetchFriends();
+            fetchGroups();
+            fetchPersonalData();
+        }
+
+        private void fetchPersonalData()
+        {
+            string personalData = string.Format(@"About myself:
+Name: {0}
+Birthday: {1}
+Gender: {2}
+City: {3}
+Email: {4}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown, m_User.Email);
+
+            labelData.Text = personalData;
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            //Thread serverCallsThread = new Thread(completeUIFromFacebookData);
+
+            //serverCallsThread.Start();
+            completeUIFromFacebookData();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            m_Settings.RememberUser = checkBoxRememberMe.Checked;
+            m_Settings.UserAccessToken = checkBoxRememberMe.Checked == true ? m_LoginResult.AccessToken : null;
+            m_Settings.LastWindowSize = this.Size;
+            m_Settings.SaveSettingsToFile();
+            base.OnFormClosing(e);
         }
 
         private void mustLoginMessage()
@@ -40,32 +84,12 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonFriends_Click(object sender, EventArgs e)
+        {
+            fetchFriends();
+        }
+
+        private void fetchFriends()
         {
             listBoxFriends.Items.Clear();
             listBoxFriends.DisplayMember = "Name";
@@ -76,7 +100,7 @@ namespace BasicFacebookFeatures
                 {
                     foreach (User friend in m_User.Friends)
                     {
-                        listBoxGroups.Items.Add(friend.FirstName);
+                        listBoxFriends.Items.Add($"{friend.Name}");
                     }
 
                     if (listBoxFriends.Items.Count == 0)
@@ -97,7 +121,12 @@ namespace BasicFacebookFeatures
 
         private void emailButton_Click(object sender, EventArgs e)
         {
-            if(m_User != null)
+            sendEmail();
+        }
+
+        private void sendEmail()
+        {
+            if (m_User != null)
             {
                 string response = EmailSender.EmailSender.SendEmail(m_User.Email, textBoxEmailSubject.Text, textBoxEmailBody.Text);
                 MessageBox.Show(response, "Message", MessageBoxButtons.OK);
@@ -112,12 +141,17 @@ namespace BasicFacebookFeatures
 
         private void buttonGroups_Click(object sender, EventArgs e)
         {
+            fetchGroups();
+        }
+
+        private void fetchGroups()
+        {
             listBoxGroups.Items.Clear();
             listBoxGroups.DisplayMember = "Name";
 
             try
             {
-                if(m_User != null)
+                if (m_User != null)
                 {
                     foreach (Group group in m_User.Groups)
                     {
@@ -142,6 +176,11 @@ namespace BasicFacebookFeatures
 
         private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
+            showPhotoOfSelectedGroup();
+        }
+
+        private void showPhotoOfSelectedGroup()
+        {
             if (listBoxGroups.SelectedItems.Count == 1)
             {
                 Group selectedGroup = listBoxGroups.SelectedItem as Group;
@@ -150,6 +189,11 @@ namespace BasicFacebookFeatures
         }
 
         private void buttonAlbums_Click(object sender, EventArgs e)
+        {
+            fetchAlbums();
+        }
+
+        private void fetchAlbums()
         {
             listBoxAlbums.Items.Clear();
             listBoxAlbums.DisplayMember = "Name";
@@ -181,6 +225,11 @@ namespace BasicFacebookFeatures
 
         private void listBoxAlbums_SelectedIndexChanged(object sender, EventArgs e)
         {
+            showPhotoOfSelectedAlbum();
+        }
+
+        private void showPhotoOfSelectedAlbum()
+        {
             if (listBoxAlbums.SelectedItems.Count == 1)
             {
                 Album selectedAlbum = listBoxAlbums.SelectedItem as Album;
@@ -192,6 +241,11 @@ namespace BasicFacebookFeatures
         }
 
         private void buttonSortAlbums_Click(object sender, EventArgs e)
+        {
+            sortAlbumsByCreatedDate();
+        }
+
+        private void sortAlbumsByCreatedDate()
         {
             listBoxAlbums.Items.Clear();
             listBoxAlbums.DisplayMember = "Name";
@@ -216,6 +270,106 @@ namespace BasicFacebookFeatures
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private void fetchPosts()
+        {
+            listBoxPosts.Items.Clear();
+            listBoxPosts.DisplayMember = "Name";
+
+            try
+            {
+                if (m_User != null) 
+                {
+                    foreach (Post post in m_User.Posts)
+                    {
+                        if (post.Message != null)
+                        {
+                            listBoxPosts.Items.Add(post.Message);
+                        }
+                        else if (post.Caption != null)
+                        {
+                            listBoxPosts.Items.Add(post.Caption);
+                        }
+                        else
+                        {
+                            listBoxPosts.Items.Add(string.Format("[{0}]", post.Type));
+                        }
+                    }
+
+                    if (listBoxPosts.Items.Count == 0)
+                    {
+                        MessageBox.Show("No Posts available");
+                    }
+                }
+                else
+                {
+                    mustLoginMessage();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private void buttonPosts_Click(object sender, EventArgs e)
+        {
+            fetchPosts();
+        }
+
+        private Dictionary<User, int> getListOfMostLikedFriends()
+        {
+            Dictionary<User, int> userLikes = null;
+
+            fetchPosts();
+
+            try
+            {
+                if (listBoxPosts.Items.Count > 0)
+                {
+                    userLikes = new Dictionary<User, int>();
+
+                    foreach (Post post in m_User.Posts)
+                    {
+                        foreach (User user in post.LikedBy)
+                        {
+                            if (userLikes.ContainsKey(user))
+                            {
+                                userLikes[user]++;
+                            }
+                            else
+                            {
+                                userLikes.Add(user, 1);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+
+            return userLikes;
+        }
+
+        private void buttonLikedFriends_Click(object sender, EventArgs e)
+        {
+            Dictionary<User, int> userLikes = getListOfMostLikedFriends();
+            if (userLikes == null)
+            {
+                MessageBox.Show("Empty list");
+            }
+            else
+            {
+                var userLikesByOrder = userLikes.OrderByDescending(pair => pair.Value).ToList();
+
+                foreach (var item in userLikesByOrder)
+                {
+                    listBoxLikedFriends.Items.Add($"{item.Key.Name} - {item.Value} likes");
+                }
             }
         }
     }

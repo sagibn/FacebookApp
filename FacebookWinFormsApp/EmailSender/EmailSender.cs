@@ -24,7 +24,7 @@ namespace BasicFacebookFeatures.EmailSender
                 };
 
                 client.Send(mail);
-                message = "Email sent successfully.";
+                message = $"Email sent successfully to {i_RecipientEmail}.";
             }
             catch (Exception ex)
             {
