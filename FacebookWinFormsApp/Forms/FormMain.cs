@@ -137,6 +137,8 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
             Thread thread = new Thread(sendEmail);
 
             thread.Start();
+            textBoxEmailSubject.Text = "--subject--";
+            textBoxEmailBody.Text = "--write your message here--";
         }
 
         private void sendEmail()
@@ -145,8 +147,6 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
             {
                 string response = EmailSender.EmailSender.SendEmail(m_User.Email, textBoxEmailSubject.Text, textBoxEmailBody.Text);
                 MessageBox.Show(response, "Message", MessageBoxButtons.OK);
-                textBoxEmailSubject.Text = "--subject--";
-                textBoxEmailBody.Text = "--write your message here--";
             }
             else
             {
@@ -440,7 +440,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
             Bitmap screenshot = new Bitmap(Width, Height);
 
             DrawToBitmap(screenshot, new Rectangle(0, 0, Width, Height));
-
+            Settings.CreateFile($"{Settings.GetSolutionRoot()}\\FacebookWinFormsApp\\Screenshots");
             string fileName = $"{Settings.GetSolutionRoot()}\\FacebookWinFormsApp\\Screenshots\\Screenshot_{DateTime.Now:yyyyMMddHHmmss}.png";
 
             screenshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
