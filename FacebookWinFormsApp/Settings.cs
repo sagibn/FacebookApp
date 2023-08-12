@@ -14,9 +14,11 @@ namespace BasicFacebookFeatures
     {
         private static Settings s_Instance = null;
         private static readonly object sr_InstanceLockContext = new object();
+        private static string s_XmlFilePath;
         public Size LastWindowSize { get; set; }
         public string UserAccessToken { get; set; }
         public bool RememberUser { get; set; }
+        public string FontName { get; set; }
 
         private Settings()
         {
@@ -24,6 +26,8 @@ namespace BasicFacebookFeatures
             LastWindowSize = new Size(1265, 753);
             RememberUser = false;
             UserAccessToken = "";
+            FontName = "Microsoft Sans Serif";
+            s_XmlFilePath = $"{GetSolutionRoot()}\\FacebookWinFormsApp\\settings.xml";
         }
 
         public static Settings Instance
@@ -37,7 +41,10 @@ namespace BasicFacebookFeatures
                         if(s_Instance == null)
                         {
                             s_Instance = new Settings();
-                            s_Instance = LoadSettingsFromFile();
+                            if (File.Exists(s_XmlFilePath))
+                            {
+                                s_Instance = loadSettingsFromFile();
+                            }
                         }
                     }
                 }
@@ -48,7 +55,8 @@ namespace BasicFacebookFeatures
 
         public void SaveSettingsToFile()
         {
-            using (Stream stream = new FileStream($"{GetSolutionRoot()}\\FacebookWinFormsApp\\settings.xml", FileMode.Truncate))
+            CreateFile(s_XmlFilePath);
+            using (Stream stream = new FileStream(s_XmlFilePath, FileMode.Truncate))
             {
                 XmlSerializer serializer = new XmlSerializer(this.GetType());
 
@@ -56,13 +64,13 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private static Settings LoadSettingsFromFile()
+        private static Settings loadSettingsFromFile()
         {
             Settings settings = null;
 
             try
             {
-                using (Stream stream = new FileStream($"{GetSolutionRoot()}\\FacebookWinFormsApp\\settings.xml", FileMode.Open))
+                using (Stream stream = new FileStream(s_XmlFilePath, FileMode.Open))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
@@ -71,14 +79,13 @@ namespace BasicFacebookFeatures
             }
             catch(Exception ex)
             {
-                settings = new Settings();
                 throw ex;
             }
 
             return settings;
         }
 
-        static string GetSolutionRoot()
+        public static string GetSolutionRoot()
         {
             string rootPath = string.Empty;
             string currentDirectory = Directory.GetCurrentDirectory();
@@ -96,6 +103,15 @@ namespace BasicFacebookFeatures
             }
 
             return rootPath;
+        }
+
+        public static void CreateFile(string i_FilePath)
+        {
+            if (!File.Exists(i_FilePath))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(i_FilePath));
+                File.Create(i_FilePath).Close();
+            }
         }
     }
 }
