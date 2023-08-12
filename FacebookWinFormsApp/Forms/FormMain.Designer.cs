@@ -36,19 +36,14 @@
             this.buttonNewPost = new System.Windows.Forms.Button();
             this.textBoxNewPost = new System.Windows.Forms.TextBox();
             this.labelNewPost = new System.Windows.Forms.Label();
-            this.pictureBoxPages = new System.Windows.Forms.PictureBox();
-            this.pictureBoxAlbums = new System.Windows.Forms.PictureBox();
-            this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
             this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
             this.buttonSortAlbums = new System.Windows.Forms.Button();
-            this.facebookLogo = new System.Windows.Forms.PictureBox();
             this.buttonFriends = new System.Windows.Forms.Button();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.buttonAlbums = new System.Windows.Forms.Button();
             this.listBoxAlbums = new System.Windows.Forms.ListBox();
             this.buttonPages = new System.Windows.Forms.Button();
             this.listBoxPages = new System.Windows.Forms.ListBox();
-            this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +55,6 @@
             this.sendFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageProfile = new System.Windows.Forms.TabPage();
             this.listBoxPosts = new System.Windows.Forms.ListBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonEvents = new System.Windows.Forms.Button();
             this.listBoxEvents = new System.Windows.Forms.ListBox();
             this.labelData = new System.Windows.Forms.Label();
@@ -71,15 +65,21 @@
             this.textBoxEmailBody = new System.Windows.Forms.TextBox();
             this.textBoxEmailSubject = new System.Windows.Forms.TextBox();
             this.textBoxEmailSender = new System.Windows.Forms.TextBox();
+            this.pictureBoxPages = new System.Windows.Forms.PictureBox();
+            this.pictureBoxAlbums = new System.Windows.Forms.PictureBox();
+            this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
+            this.facebookLogo = new System.Windows.Forms.PictureBox();
+            this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPageHome.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.tabPageProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPages)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAlbums)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriends)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
-            this.menuStrip1.SuspendLayout();
-            this.tabPageProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,6 +111,7 @@
             // tabPageHome
             // 
             this.tabPageHome.BackColor = System.Drawing.Color.Transparent;
+            this.tabPageHome.Controls.Add(this.buttonSortAlbums);
             this.tabPageHome.Controls.Add(this.buttonGroups);
             this.tabPageHome.Controls.Add(this.listBoxGroups);
             this.tabPageHome.Controls.Add(this.buttonNewPost);
@@ -120,17 +121,16 @@
             this.tabPageHome.Controls.Add(this.pictureBoxAlbums);
             this.tabPageHome.Controls.Add(this.pictureBoxFriends);
             this.tabPageHome.Controls.Add(this.checkBoxRememberMe);
-            this.tabPageHome.Controls.Add(this.buttonSortAlbums);
             this.tabPageHome.Controls.Add(this.facebookLogo);
             this.tabPageHome.Controls.Add(this.buttonFriends);
-            this.tabPageHome.Controls.Add(this.listBoxFriends);
             this.tabPageHome.Controls.Add(this.buttonAlbums);
-            this.tabPageHome.Controls.Add(this.listBoxAlbums);
             this.tabPageHome.Controls.Add(this.buttonPages);
-            this.tabPageHome.Controls.Add(this.listBoxPages);
             this.tabPageHome.Controls.Add(this.pictureBoxProfile);
             this.tabPageHome.Controls.Add(this.buttonLogout);
             this.tabPageHome.Controls.Add(this.menuStrip1);
+            this.tabPageHome.Controls.Add(this.listBoxPages);
+            this.tabPageHome.Controls.Add(this.listBoxAlbums);
+            this.tabPageHome.Controls.Add(this.listBoxFriends);
             this.tabPageHome.Location = new System.Drawing.Point(4, 35);
             this.tabPageHome.Name = "tabPageHome";
             this.tabPageHome.Padding = new System.Windows.Forms.Padding(3);
@@ -187,34 +187,6 @@
             this.labelNewPost.TabIndex = 75;
             this.labelNewPost.Text = "Share your thoughts here:";
             // 
-            // pictureBoxPages
-            // 
-            this.pictureBoxPages.BackColor = System.Drawing.Color.DarkGray;
-            this.pictureBoxPages.Location = new System.Drawing.Point(228, 434);
-            this.pictureBoxPages.Name = "pictureBoxPages";
-            this.pictureBoxPages.Size = new System.Drawing.Size(110, 110);
-            this.pictureBoxPages.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxPages.TabIndex = 65;
-            this.pictureBoxPages.TabStop = false;
-            // 
-            // pictureBoxAlbums
-            // 
-            this.pictureBoxAlbums.BackColor = System.Drawing.Color.DarkGray;
-            this.pictureBoxAlbums.Location = new System.Drawing.Point(613, 434);
-            this.pictureBoxAlbums.Name = "pictureBoxAlbums";
-            this.pictureBoxAlbums.Size = new System.Drawing.Size(110, 110);
-            this.pictureBoxAlbums.TabIndex = 66;
-            this.pictureBoxAlbums.TabStop = false;
-            // 
-            // pictureBoxFriends
-            // 
-            this.pictureBoxFriends.BackColor = System.Drawing.Color.DarkGray;
-            this.pictureBoxFriends.Location = new System.Drawing.Point(1013, 434);
-            this.pictureBoxFriends.Name = "pictureBoxFriends";
-            this.pictureBoxFriends.Size = new System.Drawing.Size(110, 110);
-            this.pictureBoxFriends.TabIndex = 67;
-            this.pictureBoxFriends.TabStop = false;
-            // 
             // checkBoxRememberMe
             // 
             this.checkBoxRememberMe.AutoSize = true;
@@ -236,16 +208,6 @@
             this.buttonSortAlbums.Text = "sort by created date";
             this.buttonSortAlbums.UseVisualStyleBackColor = false;
             this.buttonSortAlbums.Click += new System.EventHandler(this.buttonSortAlbums_Click);
-            // 
-            // facebookLogo
-            // 
-            this.facebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
-            this.facebookLogo.Location = new System.Drawing.Point(1105, 39);
-            this.facebookLogo.Name = "facebookLogo";
-            this.facebookLogo.Size = new System.Drawing.Size(130, 130);
-            this.facebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.facebookLogo.TabIndex = 64;
-            this.facebookLogo.TabStop = false;
             // 
             // buttonFriends
             // 
@@ -311,18 +273,8 @@
             this.listBoxPages.TabIndex = 57;
             this.listBoxPages.SelectedIndexChanged += new System.EventHandler(this.listBoxPages_SelectedIndexChanged);
             // 
-            // pictureBoxProfile
-            // 
-            this.pictureBoxProfile.Location = new System.Drawing.Point(18, 96);
-            this.pictureBoxProfile.Name = "pictureBoxProfile";
-            this.pictureBoxProfile.Size = new System.Drawing.Size(185, 164);
-            this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxProfile.TabIndex = 55;
-            this.pictureBoxProfile.TabStop = false;
-            // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
@@ -341,13 +293,13 @@
             this.changeBackgroundColorToolStripMenuItem,
             this.darkmodeToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(92, 32);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // changeFontToolStripMenuItem
             // 
             this.changeFontToolStripMenuItem.Name = "changeFontToolStripMenuItem";
-            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(322, 34);
+            this.changeFontToolStripMenuItem.Size = new System.Drawing.Size(348, 34);
             this.changeFontToolStripMenuItem.Text = "Change Font";
             this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
             // 
@@ -362,14 +314,14 @@
             // changeBackgroundColorToolStripMenuItem
             // 
             this.changeBackgroundColorToolStripMenuItem.Name = "changeBackgroundColorToolStripMenuItem";
-            this.changeBackgroundColorToolStripMenuItem.Size = new System.Drawing.Size(322, 34);
+            this.changeBackgroundColorToolStripMenuItem.Size = new System.Drawing.Size(348, 34);
             this.changeBackgroundColorToolStripMenuItem.Text = "Change Background Color";
             this.changeBackgroundColorToolStripMenuItem.Click += new System.EventHandler(this.changeBackgroundColorToolStripMenuItem_Click);
             // 
             // darkmodeToolStripMenuItem
             // 
             this.darkmodeToolStripMenuItem.Name = "darkmodeToolStripMenuItem";
-            this.darkmodeToolStripMenuItem.Size = new System.Drawing.Size(322, 34);
+            this.darkmodeToolStripMenuItem.Size = new System.Drawing.Size(348, 34);
             this.darkmodeToolStripMenuItem.Text = "Enable Dark Mode";
             this.darkmodeToolStripMenuItem.Click += new System.EventHandler(this.darkmodeToolStripMenuItem_Click);
             // 
@@ -379,29 +331,29 @@
             this.viewHelpToolStripMenuItem,
             this.sendFeedbackToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 32);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // viewHelpToolStripMenuItem
             // 
             this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
             this.viewHelpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(263, 34);
             this.viewHelpToolStripMenuItem.Text = "View Help";
             this.viewHelpToolStripMenuItem.Click += new System.EventHandler(this.viewHelpToolStripMenuItem_Click);
             // 
             // sendFeedbackToolStripMenuItem
             // 
             this.sendFeedbackToolStripMenuItem.Name = "sendFeedbackToolStripMenuItem";
-            this.sendFeedbackToolStripMenuItem.Size = new System.Drawing.Size(234, 34);
+            this.sendFeedbackToolStripMenuItem.Size = new System.Drawing.Size(263, 34);
             this.sendFeedbackToolStripMenuItem.Text = "Send Feedback";
             this.sendFeedbackToolStripMenuItem.Click += new System.EventHandler(this.sendFeedbackToolStripMenuItem_Click);
             // 
             // tabPageProfile
             // 
             this.tabPageProfile.Controls.Add(this.listBoxPosts);
-            this.tabPageProfile.Controls.Add(this.pictureBox1);
             this.tabPageProfile.Controls.Add(this.buttonEvents);
+            this.tabPageProfile.Controls.Add(this.pictureBox1);
             this.tabPageProfile.Controls.Add(this.listBoxEvents);
             this.tabPageProfile.Controls.Add(this.labelData);
             this.tabPageProfile.Controls.Add(this.buttonLikedFriends);
@@ -426,16 +378,6 @@
             this.listBoxPosts.Name = "listBoxPosts";
             this.listBoxPosts.Size = new System.Drawing.Size(443, 186);
             this.listBoxPosts.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
-            this.pictureBox1.Location = new System.Drawing.Point(1105, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(130, 130);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 76;
-            this.pictureBox1.TabStop = false;
             // 
             // buttonEvents
             // 
@@ -536,6 +478,63 @@
             this.textBoxEmailSender.Text = "Email Reminder";
             this.textBoxEmailSender.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // pictureBoxPages
+            // 
+            this.pictureBoxPages.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBoxPages.Location = new System.Drawing.Point(228, 434);
+            this.pictureBoxPages.Name = "pictureBoxPages";
+            this.pictureBoxPages.Size = new System.Drawing.Size(110, 110);
+            this.pictureBoxPages.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPages.TabIndex = 65;
+            this.pictureBoxPages.TabStop = false;
+            // 
+            // pictureBoxAlbums
+            // 
+            this.pictureBoxAlbums.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBoxAlbums.Location = new System.Drawing.Point(613, 434);
+            this.pictureBoxAlbums.Name = "pictureBoxAlbums";
+            this.pictureBoxAlbums.Size = new System.Drawing.Size(110, 110);
+            this.pictureBoxAlbums.TabIndex = 66;
+            this.pictureBoxAlbums.TabStop = false;
+            // 
+            // pictureBoxFriends
+            // 
+            this.pictureBoxFriends.BackColor = System.Drawing.Color.DarkGray;
+            this.pictureBoxFriends.Location = new System.Drawing.Point(1013, 434);
+            this.pictureBoxFriends.Name = "pictureBoxFriends";
+            this.pictureBoxFriends.Size = new System.Drawing.Size(110, 110);
+            this.pictureBoxFriends.TabIndex = 67;
+            this.pictureBoxFriends.TabStop = false;
+            // 
+            // facebookLogo
+            // 
+            this.facebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
+            this.facebookLogo.Location = new System.Drawing.Point(1105, 39);
+            this.facebookLogo.Name = "facebookLogo";
+            this.facebookLogo.Size = new System.Drawing.Size(130, 130);
+            this.facebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.facebookLogo.TabIndex = 64;
+            this.facebookLogo.TabStop = false;
+            // 
+            // pictureBoxProfile
+            // 
+            this.pictureBoxProfile.Location = new System.Drawing.Point(18, 96);
+            this.pictureBoxProfile.Name = "pictureBoxProfile";
+            this.pictureBoxProfile.Size = new System.Drawing.Size(185, 164);
+            this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxProfile.TabIndex = 55;
+            this.pictureBoxProfile.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
+            this.pictureBox1.Location = new System.Drawing.Point(1105, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(130, 130);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 76;
+            this.pictureBox1.TabStop = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
@@ -552,15 +551,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageHome.ResumeLayout(false);
             this.tabPageHome.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.tabPageProfile.ResumeLayout(false);
+            this.tabPageProfile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPages)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAlbums)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriends)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.tabPageProfile.ResumeLayout(false);
-            this.tabPageProfile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
