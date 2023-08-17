@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace BasicFacebookFeatures.EmailSender
 {
-    public class EmailSender
+    static public class EmailSender
     {
         static public string SendEmail(string i_RecipientEmail, string i_Subject, string i_Body)
         {
