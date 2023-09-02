@@ -10,7 +10,7 @@ using System.IO;
 
 namespace BasicFacebookFeatures
 {
-    public class Settings
+    public sealed class Settings
     {
         private static Settings s_Instance = null;
         private static readonly object sr_InstanceLockContext = new object();

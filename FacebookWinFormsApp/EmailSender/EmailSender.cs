@@ -4,27 +4,51 @@ using System.Net.Mail;
 
 namespace BasicFacebookFeatures.EmailSender
 {
-    static public class EmailSender
+    public sealed class EmailSender
     {
-        static public string SendEmail(string i_RecipientEmail, string i_Subject, string i_Body)
+        private static EmailSender s_Instance = null;
+        private readonly string r_SmtpServer;
+        private readonly string r_SenderEmail;
+        private readonly string r_SenderPassword;
+        private readonly int r_smtpPort;
+        public string RecipientEmail { get; set; }
+        public string Subject { get; set; }
+
+        private EmailSender()
         {
-            string smtpServer = "smtp.gmail.com";
-            int smtpPort = 587;
-            string senderEmail = "desigpatter57@gmail.com";
-            string senderPassword = "qeoizhtqipjlywyv";
+            r_SmtpServer = "smtp.gmail.com";
+            r_smtpPort = 587;
+            r_SenderEmail = "desigpatter57@gmail.com";
+            r_SenderPassword = "qeoizhtqipjlywyv";
+        }
+
+        public static EmailSender Instance
+        {
+            get
+            {
+                if (s_Instance == null)
+                {
+                    s_Instance = new EmailSender();
+                }
+
+                return s_Instance;
+            }
+        }
+        public string SendEmail(string i_Body)
+        {
             string message;
 
             try
             {
-                MailMessage mail = new MailMessage(senderEmail, i_RecipientEmail, i_Subject, i_Body);
-                SmtpClient client = new SmtpClient(smtpServer, smtpPort)
+                MailMessage mail = new MailMessage(r_SenderEmail, RecipientEmail, Subject, i_Body);
+                SmtpClient client = new SmtpClient(r_SmtpServer, r_smtpPort)
                 {
-                    Credentials = new NetworkCredential(senderEmail, senderPassword),
+                    Credentials = new NetworkCredential(r_SenderEmail, r_SenderPassword),
                     EnableSsl = true
                 };
 
                 client.Send(mail);
-                message = $"Email sent successfully to {i_RecipientEmail}.";
+                message = $"Email sent successfully to {RecipientEmail}.";
             }
             catch (Exception ex)
             {

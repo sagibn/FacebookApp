@@ -24,29 +24,28 @@ namespace BasicFacebookFeatures
             m_User = i_user;
             m_Settings = Settings.Instance;
             InitializeComponent();
-            this.Size = new Size(m_Settings.LastWindowSize.Width, m_Settings.LastWindowSize.Height);
             this.checkBoxRememberMe.Checked = m_Settings.RememberUser;
             applyFontByName(m_Settings.FontName);
+            this.Size = new Size(m_Settings.LastWindowSize.Width, m_Settings.LastWindowSize.Height);
         }
 
         private void applyFontByName(string i_FontName)
         {
-            Font newFont = new Font(i_FontName, 11, FontStyle.Regular);
+            Font newFont = new Font(i_FontName, 10, FontStyle.Regular);
 
-            applyFontToAllComponents(newFont);
+            applyFontToAllComponents(newFont, false);
         }
 
         private void completeUIFromFacebookData()
         {
-            buttonLogout.Enabled = true;
             FacebookService.s_CollectionLimit = 25;
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-            fetchAlbums();
-            fetchFriends();
-            fetchPages();
-            fetchGroups();
-            fetchPersonalData();
-            this.Text = $"Connected as {m_User.Name}";
+            new Thread(fetchAlbums).Start();
+            new Thread(fetchFriends).Start();
+            new Thread(fetchPages).Start();
+            new Thread(fetchGroups).Start();
+            new Thread(fetchPersonalData).Start();
+            this.Invoke(new Action(() => this.Text = $"Connected as {m_User.Name}"));
         }
 
         private void fetchPersonalData()
@@ -68,7 +67,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            completeUIFromFacebookData();
+            new Thread(completeUIFromFacebookData).Start();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -99,13 +98,13 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void buttonFriends_Click(object sender, EventArgs e)
         {
-            fetchFriends();
+            new Thread(fetchFriends).Start();
         }
 
         private void fetchFriends()
         {
-            listBoxFriends.Items.Clear();
-            listBoxFriends.DisplayMember = "Name";
+            listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Clear()));
+            listBoxFriends.Invoke(new Action(() => listBoxFriends.DisplayMember = "Name"));
 
             try
             {
@@ -113,7 +112,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                 {
                     foreach (User friend in m_User.Friends)
                     {
-                        listBoxFriends.Items.Add($"{friend.Name}");
+                        listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add($"{friend.Name}")));
                     }
 
                     if (listBoxFriends.Items.Count == 0)
@@ -134,18 +133,24 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void emailButton_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(sendEmail);
+            Thread thread = new Thread(() => {
+            sendEmail();
+            textBoxEmailSubject.Invoke(new Action(() => textBoxEmailSubject.Text = "--subject--"));
+            textBoxEmailBody.Invoke(new Action(() => textBoxEmailBody.Text = "--write your message here--")); });
 
             thread.Start();
-            textBoxEmailSubject.Text = "--subject--";
-            textBoxEmailBody.Text = "--write your message here--";
         }
 
         private void sendEmail()
         {
             if (m_User != null)
             {
-                string response = EmailSender.EmailSender.SendEmail(m_User.Email, textBoxEmailSubject.Text, textBoxEmailBody.Text);
+                EmailSender.EmailSender emailSender = EmailSender.EmailSender.Instance;
+
+                emailSender.RecipientEmail = m_User.Email;
+                emailSender.Subject = textBoxEmailSubject.Text;
+                string response = emailSender.SendEmail(textBoxEmailBody.Text);
+
                 MessageBox.Show(response, "Message", MessageBoxButtons.OK);
             }
             else
@@ -156,13 +161,13 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void buttonPages_Click(object sender, EventArgs e)
         {
-            fetchPages();
+            new Thread(fetchPages).Start();
         }
 
         private void fetchPages()
         {
-            listBoxPages.Items.Clear();
-            listBoxPages.DisplayMember = "Name";
+            listBoxPages.Invoke(new Action(() => listBoxPages.Items.Clear()));
+            listBoxPages.Invoke(new Action(() => listBoxPages.DisplayMember = "Name"));
 
             try
             {
@@ -170,7 +175,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                 {
                     foreach (Page page in m_User.LikedPages)
                     {
-                        listBoxPages.Items.Add(page);
+                        listBoxPages.Invoke(new Action(() => listBoxPages.Items.Add(page)));
                     }
 
                     if (listBoxPages.Items.Count == 0)
@@ -205,13 +210,13 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void buttonAlbums_Click(object sender, EventArgs e)
         {
-            fetchAlbums();
+            new Thread(fetchAlbums).Start();
         }
 
         private void fetchAlbums()
         {
-            listBoxAlbums.Items.Clear();
-            listBoxAlbums.DisplayMember = "Name";
+            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Clear()));
+            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.DisplayMember = "Name"));
 
             try
             {
@@ -219,7 +224,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                 {
                     foreach (Album album in m_User.Albums)
                     {
-                        listBoxAlbums.Items.Add(album);
+                        listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add(album)));
                     }
 
                     if (listBoxAlbums.Items.Count == 0)
@@ -263,7 +268,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
         private void sortAlbumsByCreatedDate()
         {
             listBoxAlbums.Items.Clear();
-            listBoxAlbums.DisplayMember = "Name";
+            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.DisplayMember = "Name"));
 
             try
             {
@@ -274,7 +279,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
                     foreach (Album album in sortedAlbums)
                     {
-                        listBoxAlbums.Items.Add(album);
+                        listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add(album)));
                     }
                 }
                 else
@@ -290,8 +295,9 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void fetchPosts()
         {
-            listBoxPosts.Items.Clear();
-            listBoxPosts.DisplayMember = "Name";
+            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Clear()));
+            listBoxPosts.Invoke(new Action(() => listBoxPosts.DisplayMember = "Name"));
+
             try
             {
                 if (m_User != null) 
@@ -300,15 +306,15 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                     {
                         if (post.Message != null)
                         {
-                            listBoxPosts.Items.Add(post.Message);
+                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(post.Message)));
                         }
                         else if (post.Caption != null)
                         {
-                            listBoxPosts.Items.Add(post.Caption);
+                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(post.Caption)));
                         }
                         else
                         {
-                            listBoxPosts.Items.Add(string.Format("[{0}]", post.Type));
+                            listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(string.Format("[{0}]", post.Type))));
                         }
                     }
 
@@ -330,7 +336,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void buttonPosts_Click(object sender, EventArgs e)
         {
-            fetchPosts();
+           new Thread(fetchPosts).Start();
         }
 
         private Dictionary<User, int> getListOfMostLikedFriends()
@@ -463,27 +469,34 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
             {
                 Font selectedFont = fontDialog.Font;
 
-                applyFontToAllComponents(selectedFont);
+                applyFontToAllComponents(selectedFont, true);
             }
         }
 
-        private void applyFontToAllComponents(Font i_ChosenFont)
+        private void applyFontToAllComponents(Font i_ChosenFont, bool i_ChangeSize)
         {
             foreach (Control control in Controls)
             {
-                applyFontRecursively(control, i_ChosenFont);
+                applyFontRecursively(control, i_ChosenFont, i_ChangeSize);
             }
 
             this.Font = i_ChosenFont;
         }
 
-        private void applyFontRecursively(Control i_Control, Font i_Font)
+        private void applyFontRecursively(Control i_Control, Font i_Font, bool i_ChangeSize)
         {
-            i_Control.Font = i_Font;
+            if (i_ChangeSize)
+            {
+                i_Control.Font = i_Font;
+            }
+            else
+            {
+                i_Control.Font = new Font(i_Font.Name, i_Control.Font.Size, FontStyle.Regular);
+            }
 
             foreach (Control childControl in i_Control.Controls)
             {
-                applyFontRecursively(childControl, i_Font);
+                applyFontRecursively(childControl, i_Font, i_ChangeSize);
             }
         }
 
@@ -527,13 +540,13 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void buttonEvents_Click(object sender, EventArgs e)
         {
-            fetchEvents();
+            new Thread(fetchEvents).Start();
         }
 
         private void fetchEvents()
         {
-            listBoxEvents.Items.Clear();
-            listBoxEvents.DisplayMember = "Name";
+            listBoxEvents.Invoke(new Action(() => listBoxEvents.Items.Clear()));
+            listBoxEvents.Invoke(new Action(() => listBoxEvents.DisplayMember = "Name"));
 
             try
             {
@@ -541,7 +554,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                 {
                     foreach (Event @event in m_User.Events)
                     {
-                        listBoxEvents.Items.Add(@event);
+                        listBoxEvents.Invoke(new Action(() => listBoxEvents.Items.Add(@event)));
                     }
 
                     if (listBoxEvents.Items.Count == 0)
@@ -587,49 +600,44 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void sendFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string recipientEmail = "desigpatter57@gmail.com";
-            string subject = $"Feedback from {m_User.Email}";
-            string mailtoUri = $"mailto:{recipientEmail}?subject={Uri.EscapeDataString(subject)}";
-
-            Process.Start(new ProcessStartInfo(mailtoUri));
-        }
-
-        private void buttonGroups_Click(object sender, EventArgs e)
-        {
-            fetchGroups();
-        }
-
-        private void fetchGroups()
-        {
-            listBoxGroups.Items.Clear();
-            listBoxGroups.DisplayMember = "Name";
-
             try
             {
-                if (m_User != null)
-                {
-                    foreach (Group group in m_User.Groups)
-                    {
-                        listBoxGroups.Items.Add(group);
-                    }
+                string recipientEmail = "desigpatter57@gmail.com";
+                string subject = $"Feedback from {m_User.Email}";
+                string mailtoUri = $"mailto:{recipientEmail}?subject={Uri.EscapeDataString(subject)}";
 
-                    if (listBoxGroups.Items.Count == 0)
-                    {
-                        MessageBox.Show("No groups available", "Error", MessageBoxButtons.OK);
-                    }
-                }
-                else
-                {
-                    mustLoginMessage();
-                }
+                Process.Start(new ProcessStartInfo(mailtoUri));
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
             }
         }
 
+        private void buttonGroups_Click(object sender, EventArgs e)
+        {
+            new Thread(fetchGroups).Start();
+        }
+
+        private void fetchGroups()
+        {
+            this.Invoke(new Action(() => groupBindingSource.DataSource = m_User.Groups));
+        }
+
         private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(listBoxGroups.SelectedItems.Count == 1)
+            {
+                Group selectedGroup = listBoxGroups.SelectedItem as Group;
+
+                if(selectedGroup.Id != null)
+                {
+                    linkGroup.Text = $"www.facebook.com/groups/{selectedGroup.Id}";
+                }
+            }
+        }
+
+        private void linkGroup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (listBoxGroups.SelectedItems.Count == 1)
             {
@@ -640,21 +648,35 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                     {
                         Process.Start($"www.facebook.com/groups/{selectedGroup.Id}");
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Can not get the ID of the selected group", "Error", MessageBoxButtons.OK);
-                }
             }
         }
 
-        private void linkLabelGroup_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
-        }
+        //private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (listBoxEvents.SelectedItems.Count == 1)
+        //    {
+        //        Group selectedGroup = listBoxEvents.SelectedItem as Group;
+        //        if (selectedGroup.Id != null)
+        //        {
+        //            try
+        //            {
+        //                Process.Start($"www.facebook.com/groups/{selectedGroup.Id}");
+        //            }
+        //            catch(Exception ex)
+        //            {
+        //                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Can not get the ID of the selected group", "Error", MessageBoxButtons.OK);
+        //        }
+        //    }
+        //}
     }
 }
