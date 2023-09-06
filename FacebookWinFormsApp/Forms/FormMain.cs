@@ -41,27 +41,13 @@ namespace BasicFacebookFeatures
             FacebookService.s_CollectionLimit = 25;
             pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
             new Thread(fetchAlbums).Start();
-            new Thread(fetchFriends).Start();
-            new Thread(fetchPages).Start();
             new Thread(fetchGroups).Start();
-            new Thread(fetchPersonalData).Start();
+            new Thread(() => FormHelper.FetchFacebookItem(listBoxFriends,
+                                                (m_User != null) ? m_User.Friends : null)).Start();
+            new Thread(() => FormHelper.FetchFacebookItem(listBoxPages,
+                                                (m_User != null) ? m_User.LikedPages : null)).Start();
+            new Thread(() => FormHelper.FetchPersonalData(m_User, labelData)).Start();
             this.Invoke(new Action(() => this.Text = $"Connected as {m_User.Name}"));
-        }
-
-        private void fetchPersonalData()
-        {
-            string personalData = string.Format(@"About myself:
-Name: {0}
-Birthday: {1}
-Gender: {2}
-Hometown: {3}
-Email: {4}
-Relationship: {5}
-Religion: {6}
-My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown, 
-                    m_User.Email, m_User.RelationshipStatus, m_User.Religion, m_User.Location.Name);
-
-            labelData.Text = personalData;
         }
 
         protected override void OnShown(EventArgs e)
@@ -81,11 +67,6 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
             base.OnFormClosing(e);
         }
 
-        private void mustLoginMessage()
-        {
-            MessageBox.Show("Must login to use this feature", "Error", MessageBoxButtons.OK);
-        }
-
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             FacebookService.LogoutWithUI();
@@ -98,37 +79,8 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void buttonFriends_Click(object sender, EventArgs e)
         {
-            new Thread(fetchFriends).Start();
-        }
-
-        private void fetchFriends()
-        {
-            listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Clear()));
-            listBoxFriends.Invoke(new Action(() => listBoxFriends.DisplayMember = "Name"));
-
-            try
-            {
-                if (m_User != null)
-                {
-                    foreach (User friend in m_User.Friends)
-                    {
-                        listBoxFriends.Invoke(new Action(() => listBoxFriends.Items.Add($"{friend.Name}")));
-                    }
-
-                    if (listBoxFriends.Items.Count == 0)
-                    {
-                        MessageBox.Show("No friends available", "Error", MessageBoxButtons.OK);
-                    }
-                }
-                else
-                {
-                    mustLoginMessage();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-            }
+            new Thread(() => FormHelper.FetchFacebookItem(listBoxFriends,
+                                                (m_User != null) ? m_User.Friends : null)).Start();
         }
 
         private void emailButton_Click(object sender, EventArgs e)
@@ -155,57 +107,19 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
             }
             else
             {
-                mustLoginMessage();
+                FormHelper.MustLoginMessage();
             }
         }
 
         private void buttonPages_Click(object sender, EventArgs e)
         {
-            new Thread(fetchPages).Start();
-        }
-
-        private void fetchPages()
-        {
-            listBoxPages.Invoke(new Action(() => listBoxPages.Items.Clear()));
-            listBoxPages.Invoke(new Action(() => listBoxPages.DisplayMember = "Name"));
-
-            try
-            {
-                if (m_User != null)
-                {
-                    foreach (Page page in m_User.LikedPages)
-                    {
-                        listBoxPages.Invoke(new Action(() => listBoxPages.Items.Add(page)));
-                    }
-
-                    if (listBoxPages.Items.Count == 0)
-                    {
-                        MessageBox.Show("No pages available", "Error", MessageBoxButtons.OK);
-                    }
-                }
-                else
-                {
-                    mustLoginMessage();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-            }
+            new Thread(() => FormHelper.FetchFacebookItem(listBoxPages,
+                                                (m_User != null) ? m_User.LikedPages : null)).Start();
         }
 
         private void listBoxPages_SelectedIndexChanged(object sender, EventArgs e)
         {
-            showPhotoOfSelectedPage();
-        }
-
-        private void showPhotoOfSelectedPage()
-        {
-            if (listBoxPages.SelectedItems.Count == 1)
-            {
-                Page selectedPage = listBoxPages.SelectedItem as Page;
-                pictureBoxPages.LoadAsync(selectedPage.PictureNormalURL);
-            }
+            FormHelper.ShowPhotoOfSelectedItem(listBoxPages, pictureBoxPages);
         }
 
         private void buttonAlbums_Click(object sender, EventArgs e)
@@ -215,82 +129,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void fetchAlbums()
         {
-            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Clear()));
-            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.DisplayMember = "Name"));
-
-            try
-            {
-                if (m_User != null)
-                {
-                    foreach (Album album in m_User.Albums)
-                    {
-                        listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add(album)));
-                    }
-
-                    if (listBoxAlbums.Items.Count == 0)
-                    {
-                        MessageBox.Show("No Albums available", "Error", MessageBoxButtons.OK);
-                    }
-                }
-                else
-                {
-                    mustLoginMessage();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-            }
-        }
-
-        private void listBoxAlbums_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            showPhotoOfSelectedAlbum();
-        }
-
-        private void showPhotoOfSelectedAlbum()
-        {
-            if (listBoxAlbums.SelectedItems.Count == 1)
-            {
-                Album selectedAlbum = listBoxAlbums.SelectedItem as Album;
-                if (selectedAlbum.PictureAlbumURL != null)
-                {
-                    pictureBoxAlbums.LoadAsync(selectedAlbum.PictureAlbumURL);
-                }
-            }
-        }
-
-        private void buttonSortAlbums_Click(object sender, EventArgs e)
-        {
-            sortAlbumsByCreatedDate();
-        }
-
-        private void sortAlbumsByCreatedDate()
-        {
-            listBoxAlbums.Items.Clear();
-            listBoxAlbums.Invoke(new Action(() => listBoxAlbums.DisplayMember = "Name"));
-
-            try
-            {
-                if (m_User != null)
-                {
-
-                    List<Album> sortedAlbums = m_User.Albums.OrderBy(album => album.CreatedTime).ToList();
-
-                    foreach (Album album in sortedAlbums)
-                    {
-                        listBoxAlbums.Invoke(new Action(() => listBoxAlbums.Items.Add(album)));
-                    }
-                }
-                else
-                {
-                    mustLoginMessage();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-            }
+            this.Invoke(new Action(() => albumBindingSource.DataSource = m_User.Albums));
         }
 
         private void fetchPosts()
@@ -325,7 +164,7 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                 }
                 else
                 {
-                    mustLoginMessage();
+                    FormHelper.MustLoginMessage();
                 }
             }
             catch (Exception ex)
@@ -515,87 +354,12 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
 
         private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
-            showPhotoOfSelectedFriend();
-        }
-
-        private void showPhotoOfSelectedFriend()
-        {
-            if (listBoxFriends.SelectedItems.Count == 1)
-            {
-                User selectedFriend = listBoxFriends.SelectedItem as User;
-
-                if (selectedFriend != null)
-                {
-                    if (selectedFriend.PictureNormalURL != null)
-                    {
-                        pictureBoxAlbums.LoadAsync(selectedFriend.PictureNormalURL);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Permission denied.", "Error", MessageBoxButtons.OK);
-                }
-            }
-        }
-
-        private void buttonEvents_Click(object sender, EventArgs e)
-        {
-            new Thread(fetchEvents).Start();
-        }
-
-        private void fetchEvents()
-        {
-            listBoxEvents.Invoke(new Action(() => listBoxEvents.Items.Clear()));
-            listBoxEvents.Invoke(new Action(() => listBoxEvents.DisplayMember = "Name"));
-
-            try
-            {
-                if (m_User != null)
-                {
-                    foreach (Event @event in m_User.Events)
-                    {
-                        listBoxEvents.Invoke(new Action(() => listBoxEvents.Items.Add(@event)));
-                    }
-
-                    if (listBoxEvents.Items.Count == 0)
-                    {
-                        MessageBox.Show("No Events available", "Error", MessageBoxButtons.OK);
-                    }
-                }
-                else
-                {
-                    mustLoginMessage();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-            }
+            FormHelper.ShowPhotoOfSelectedItem(listBoxFriends, pictureBoxFriends);
         }
 
         private void viewHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            helpMessage();
-        }
-
-        private static void helpMessage()
-        {
-            string helpMessage = "Welcome to Our App - Help Guide\n\n" +
-                            "Home Page:\n\n" +
-                            "1. Remember Me Checkbox: Check this box if you'd like to be logged in automatically the next time you open the app. This will save you from having to enter your login credentials every time.\n" +
-                            "2. Post Your Thoughts: Use the text box to write and share your thoughts. Click the \"Post\" button to publish your post online for others to see.\n" +
-                            "3. Groups: Click this button to see a list of all your groups. By clicking on a group's name, you'll open the group in your browser.\n" +
-                            "4. Liked Pages: Click this button to view a list of pages you've liked. By clicking on a page's name, you'll be able to see the page's picture.\n" +
-                            "5. Friends: Explore your friend list by clicking this button. Click on a friend's name to see their picture.\n" +
-                            "6. Albums: Discover your photo albums by clicking this button. Click on an album's name to view its picture. Additionally, there's a button to sort albums by their creation date.\n\n" +
-                            "Profile Page:\n\n" +
-                            "1. View Your Posts: Click this button to see a list of all your posts. This helps you keep track of your contributions and thoughts.\n" +
-                            "2. Top Supporters: Find out who your most supportive friends are! This button will show a list of friends who have liked your posts the most.\n" +
-                            "3. Events: Click here to see a list of upcoming events that you're a part of.\n" +
-                            "4. Email Reminder: Use this feature to send yourself an email reminder. Enter a subject and click \"Send\" to receive an email in your inbox.\n\n" +
-                            "We hope this guide helps you make the most of our app's features. Feel free to explore and enjoy a seamless experience!";
-
-            MessageBox.Show(helpMessage, "Help Guide", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormHelper.HelpMessage();
         }
 
         private void sendFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -655,28 +419,5 @@ My Location: {7}", m_User.Name, m_User.Birthday, m_User.Gender, m_User.Hometown,
                 }
             }
         }
-
-        //private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (listBoxEvents.SelectedItems.Count == 1)
-        //    {
-        //        Group selectedGroup = listBoxEvents.SelectedItem as Group;
-        //        if (selectedGroup.Id != null)
-        //        {
-        //            try
-        //            {
-        //                Process.Start($"www.facebook.com/groups/{selectedGroup.Id}");
-        //            }
-        //            catch(Exception ex)
-        //            {
-        //                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Can not get the ID of the selected group", "Error", MessageBoxButtons.OK);
-        //        }
-        //    }
-        //}
     }
 }
