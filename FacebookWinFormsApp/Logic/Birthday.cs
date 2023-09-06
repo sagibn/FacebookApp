@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicFacebookFeatures.Adapters
+namespace BasicFacebookFeatures.Logic
 {
     public class Birthday
     {

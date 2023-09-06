@@ -10,18 +10,19 @@ using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Threading;
 using System.Diagnostics;
+using BasicFacebookFeatures.Logic;
 
 namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
         private LoginResult m_LoginResult;
-        private User m_User;
+        private UserFacade m_User;
         private Settings m_Settings;
-        public FormMain(LoginResult i_loginResult, User i_user)
+        public FormMain(LoginResult i_loginResult, User i_User)
         {
             m_LoginResult = i_loginResult;
-            m_User = i_user;
+            m_User = new UserFacade(i_User);
             m_Settings = Settings.Instance;
             InitializeComponent();
             this.checkBoxRememberMe.Checked = m_Settings.RememberUser;
@@ -97,7 +98,7 @@ namespace BasicFacebookFeatures
         {
             if (m_User != null)
             {
-                EmailSender.EmailSender emailSender = EmailSender.EmailSender.Instance;
+                EmailSender emailSender = EmailSender.Instance;
 
                 emailSender.RecipientEmail = m_User.Email;
                 emailSender.Subject = textBoxEmailSubject.Text;

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace BasicFacebookFeatures.EmailSender
+namespace BasicFacebookFeatures.Logic
 {
     public sealed class EmailSender
     {

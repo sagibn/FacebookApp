@@ -8,6 +8,7 @@ using FacebookWrapper;
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
+using BasicFacebookFeatures.Logic;
 
 namespace BasicFacebookFeatures
 {
@@ -48,14 +49,14 @@ namespace BasicFacebookFeatures
             MessageBox.Show("Must login to use this feature", "Error", MessageBoxButtons.OK);
         }
 
-        internal static void FetchPersonalData(User i_User, Control i_Control)
+        internal static void FetchPersonalData(UserFacade i_User, Control i_Control)
         {
             int? age = null;
             int? nextBirthday = null;
             string zodiacSign = string.Empty;
             try
             {
-                Adapters.BirthdayAdapter birthday = new Adapters.BirthdayAdapter(i_User.Birthday);
+                BirthdayAdapter birthday = new BirthdayAdapter(i_User.Birthday);
                 age = birthday.Age();
                 nextBirthday = birthday.NextBirthdayInDays();
                 zodiacSign = birthday.GetZodiacSign();
@@ -84,8 +85,20 @@ Zodiac sign: {8}", i_User.Name, i_User.Birthday, age, nextBirthday, i_User.Gende
         {
             if (i_ListBox.SelectedItems.Count == 1)
             {
-                OwnerObject selectedItem = i_ListBox.SelectedItem as OwnerObject;
-                i_PictureBox.LoadAsync(selectedItem.PictureNormalURL);
+                OwnerObject selectedObj = i_ListBox.SelectedItem as OwnerObject;
+
+                if (selectedObj != null)
+                {
+                    i_PictureBox.LoadAsync(selectedObj.PictureNormalURL);
+                }
+
+                IFacebookObjectFacade selectedFacade = i_ListBox.SelectedItem as IFacebookObjectFacade;
+
+                if (selectedFacade != null)
+                {
+                    i_PictureBox.LoadAsync(selectedFacade.PictureNormalURL);
+                }
+
             }
         }
 

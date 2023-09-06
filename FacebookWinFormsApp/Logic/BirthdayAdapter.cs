@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 
-namespace BasicFacebookFeatures.Adapters
+namespace BasicFacebookFeatures.Logic
 {
     public class BirthdayAdapter
     {

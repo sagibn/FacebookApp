@@ -89,9 +89,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\Birthday.cs" />
-    <Compile Include="Adapters\BirthdayAdapter.cs" />
-    <Compile Include="EmailSender\EmailSender.cs" />
+    <Compile Include="Logic\Birthday.cs" />
+    <Compile Include="Logic\BirthdayAdapter.cs" />
+    <Compile Include="Logic\EmailSender.cs" />
+    <Compile Include="Logic\IFacebookObjectFacade.cs" />
+    <Compile Include="Logic\PageFacade.cs" />
+    <Compile Include="Logic\UserFacade.cs" />
     <Compile Include="FormHelper.cs" />
     <Compile Include="Forms\FormMain.cs">
       <SubType>Form</SubType>
