@@ -9,16 +9,54 @@ using System.Drawing;
 
 namespace BasicFacebookFeatures.Logic
 {
-    public class PageFacade : IFacebookObjectFacade
+    public class PageProxy : IFacebookObjectProxy
     {
         private Page m_Page;
+        private FacebookObjectCollection<Checkin> m_SavedCheckins;
+        private FacebookObjectCollection<Post> m_SavedPosts;
 
-        public PageFacade(Page i_Page)
+        public PageProxy(Page i_Page)
         {
             m_Page = i_Page;
+            m_SavedCheckins = new FacebookObjectCollection<Checkin>();
+            m_SavedPosts = new FacebookObjectCollection<Post>();
+        }
+
+        public FacebookObjectCollection<Checkin> Checkins
+        {
+            get
+            {
+                if (m_SavedCheckins.Count != m_Page.Checkins.Count)
+                {
+                    m_SavedCheckins = m_Page.Checkins;
+                }
+
+                return m_SavedCheckins;
+            }
+        }
+
+        public FacebookObjectCollection<Post> Posts
+        {
+            get
+            {
+                if (m_SavedPosts.Count != m_Page.Posts.Count)
+                {
+                    m_SavedPosts = m_Page.Posts;
+                }
+
+                return m_SavedPosts;
+            }
         }
 
         public string Description { get => m_Page.Description; }
+
+        public string Id { get => m_Page.Id; }
+
+        public bool? IsCommunityPage { get => m_Page.IsCommunityPage; }
+
+        public bool? IsPublished { get => m_Page.IsPublished; }
+
+        public long? CheckinsCount { get => m_Page.CheckinsCount; }
 
         public string Name { get => m_Page.Name; }
 

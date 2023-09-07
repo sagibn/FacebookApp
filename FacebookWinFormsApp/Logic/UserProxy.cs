@@ -9,27 +9,27 @@ using System.Drawing;
 
 namespace BasicFacebookFeatures.Logic
 {
-    public class UserFacade : IFacebookObjectFacade
+    public class UserProxy : IFacebookObjectProxy
     {
         private User m_User;
         private FacebookObjectCollection<Post> m_SavedPosts;
-        private FacebookObjectCollection<UserFacade> m_SavedFriends;
-        private FacebookObjectCollection<PageFacade> m_SavedLikedPages;
+        private FacebookObjectCollection<UserProxy> m_SavedFriends;
+        private FacebookObjectCollection<PageProxy> m_SavedLikedPages;
         private FacebookObjectCollection<Album> m_SavedAlbums;
         private FacebookObjectCollection<Group> m_SavedGroups;
         private FacebookObjectCollection<Event> m_SavedEvents;
-        private PageFacade[] m_SavedFavoriteTeams;
+        private PageProxy[] m_SavedFavoriteTeams;
 
-        public UserFacade(User i_User)
+        public UserProxy(User i_User)
         {
             m_User = i_User;
             m_SavedPosts = new FacebookObjectCollection<Post>();
-            m_SavedFriends = new FacebookObjectCollection<UserFacade>();
-            m_SavedLikedPages = new FacebookObjectCollection<PageFacade>();
+            m_SavedFriends = new FacebookObjectCollection<UserProxy>();
+            m_SavedLikedPages = new FacebookObjectCollection<PageProxy>();
             m_SavedAlbums = new FacebookObjectCollection<Album>();
             m_SavedGroups = new FacebookObjectCollection<Group>();
             m_SavedEvents = new FacebookObjectCollection<Event>();
-            m_SavedFavoriteTeams = new PageFacade[0];
+            m_SavedFavoriteTeams = new PageProxy[0];
         }
 
         public string About
@@ -165,7 +165,7 @@ namespace BasicFacebookFeatures.Logic
             }
         }
 
-        public FacebookObjectCollection<UserFacade> Friends
+        public FacebookObjectCollection<UserProxy> Friends
         {
             get
             {
@@ -173,7 +173,7 @@ namespace BasicFacebookFeatures.Logic
                 {
                     foreach(User friend in m_User.Friends)
                     {
-                        m_SavedFriends.Add(new UserFacade(friend));
+                        m_SavedFriends.Add(new UserProxy(friend));
                     }
                 }
 
@@ -181,7 +181,7 @@ namespace BasicFacebookFeatures.Logic
             }
         }
 
-        public FacebookObjectCollection<PageFacade> LikedPages
+        public FacebookObjectCollection<PageProxy> LikedPages
         {
             get
             {
@@ -189,7 +189,7 @@ namespace BasicFacebookFeatures.Logic
                 {
                     foreach(Page page in m_User.LikedPages)
                     {
-                        m_SavedLikedPages.Add(new PageFacade(page));
+                        m_SavedLikedPages.Add(new PageProxy(page));
                     }
                 }
 
@@ -236,16 +236,16 @@ namespace BasicFacebookFeatures.Logic
             }
         }
 
-        public PageFacade[] FavofriteTeams
+        public PageProxy[] FavofriteTeams
         {
             get
             {
                 if (m_SavedFavoriteTeams.Length != m_User.FavofriteTeams.Length)
                 {
-                    m_SavedFavoriteTeams = new PageFacade[m_User.FavofriteTeams.Length];
+                    m_SavedFavoriteTeams = new PageProxy[m_User.FavofriteTeams.Length];
                     for(int i = 0; i < m_User.FavofriteTeams.Length; i++)
                     {
-                        m_SavedFavoriteTeams[i] = new PageFacade(m_User.FavofriteTeams[i]);
+                        m_SavedFavoriteTeams[i] = new PageProxy(m_User.FavofriteTeams[i]);
                     }
                 }
 

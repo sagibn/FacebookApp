@@ -49,7 +49,7 @@ namespace BasicFacebookFeatures
             MessageBox.Show("Must login to use this feature", "Error", MessageBoxButtons.OK);
         }
 
-        internal static void FetchPersonalData(UserFacade i_User, Control i_Control)
+        internal static void FetchPersonalData(UserProxy i_User, Control i_Control)
         {
             int? age = null;
             int? nextBirthday = null;
@@ -92,7 +92,7 @@ Zodiac sign: {8}", i_User.Name, i_User.Birthday, age, nextBirthday, i_User.Gende
                     i_PictureBox.LoadAsync(selectedObj.PictureNormalURL);
                 }
 
-                IFacebookObjectFacade selectedFacade = i_ListBox.SelectedItem as IFacebookObjectFacade;
+                IFacebookObjectProxy selectedFacade = i_ListBox.SelectedItem as IFacebookObjectProxy;
 
                 if (selectedFacade != null)
                 {

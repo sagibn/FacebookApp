@@ -17,12 +17,12 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private LoginResult m_LoginResult;
-        private UserFacade m_User;
+        private UserProxy m_User;
         private Settings m_Settings;
         public FormMain(LoginResult i_loginResult, User i_User)
         {
             m_LoginResult = i_loginResult;
-            m_User = new UserFacade(i_User);
+            m_User = new UserProxy(i_User);
             m_Settings = Settings.Instance;
             InitializeComponent();
             this.checkBoxRememberMe.Checked = m_Settings.RememberUser;
