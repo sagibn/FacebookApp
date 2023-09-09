@@ -179,9 +179,9 @@ namespace BasicFacebookFeatures
            new Thread(fetchPosts).Start();
         }
 
-        private Dictionary<User, int> getListOfMostLikedFriends()
+        private Dictionary<IFacebookObjectProxy, int> getListOfMostLikedFriends()
         {
-            Dictionary<User, int> userLikes = null;
+            Dictionary<IFacebookObjectProxy, int> userLikes = null;
 
             fetchPosts();
 
@@ -189,19 +189,19 @@ namespace BasicFacebookFeatures
             {
                 if (listBoxPosts.Items.Count > 0)
                 {
-                    userLikes = new Dictionary<User, int>();
+                    userLikes = new Dictionary<IFacebookObjectProxy, int>();
 
                     foreach (Post post in m_User.Posts)
                     {
                         foreach (User user in post.LikedBy)
                         {
-                            if (userLikes.ContainsKey(user))
+                            if (userLikes.ContainsKey(new UserProxy(user)))
                             {
-                                userLikes[user]++;
+                                userLikes[new UserProxy(user)]++;
                             }
                             else
                             {
-                                userLikes.Add(user, 1);
+                                userLikes.Add(new UserProxy(user), 1);
                             }
                         }
                     }
@@ -217,7 +217,7 @@ namespace BasicFacebookFeatures
 
         private void buttonLikedFriends_Click(object sender, EventArgs e)
         {
-            Dictionary<User, int> userLikes = getListOfMostLikedFriends();
+            Dictionary<IFacebookObjectProxy, int> userLikes = getListOfMostLikedFriends();
             if (userLikes == null)
             {
                 MessageBox.Show("Empty list");
