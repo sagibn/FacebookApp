@@ -92,9 +92,6 @@
     <Compile Include="Logic\Birthday.cs" />
     <Compile Include="Logic\BirthdayAdapter.cs" />
     <Compile Include="Logic\EmailSender.cs" />
-    <Compile Include="Logic\IFacebookObjectFacade.cs" />
-    <Compile Include="Logic\PageFacade.cs" />
-    <Compile Include="Logic\UserFacade.cs" />
     <Compile Include="FormHelper.cs" />
     <Compile Include="Forms\FormMain.cs">
       <SubType>Form</SubType>
@@ -108,6 +105,9 @@
     <Compile Include="Forms\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\IFacebookObjectProxy.cs" />
+    <Compile Include="Logic\PageProxy.cs" />
+    <Compile Include="Logic\UserProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

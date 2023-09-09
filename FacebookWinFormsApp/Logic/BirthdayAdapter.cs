@@ -9,7 +9,7 @@ namespace BasicFacebookFeatures.Logic
 {
     public class BirthdayAdapter
     {
-        Birthday m_BirthDay;
+        private Birthday m_BirthDay;
 
         public BirthdayAdapter(string i_StrDate)
         {

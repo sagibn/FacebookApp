@@ -12,9 +12,9 @@ using BasicFacebookFeatures.Logic;
 
 namespace BasicFacebookFeatures
 {
-    internal static class FormHelper
+    public static class FormHelper
     {
-        internal static void FetchFacebookItem<T>(ListBox i_ListBox, FacebookObjectCollection<T> i_Collection)
+        public static void FetchFacebookItem<T>(ListBox i_ListBox, FacebookObjectCollection<T> i_Collection)
         {
             i_ListBox.Invoke(new Action(() => i_ListBox.Items.Clear()));
             i_ListBox.Invoke(new Action(() => i_ListBox.DisplayMember = "Name"));
@@ -44,12 +44,12 @@ namespace BasicFacebookFeatures
             }
         }
 
-        internal static void MustLoginMessage()
+        public static void MustLoginMessage()
         {
             MessageBox.Show("Must login to use this feature", "Error", MessageBoxButtons.OK);
         }
 
-        internal static void FetchPersonalData(UserProxy i_User, Control i_Control)
+        public static void FetchPersonalData(UserProxy i_User, Control i_Control)
         {
             int? age = null;
             int? nextBirthday = null;
@@ -81,7 +81,7 @@ Zodiac sign: {8}", i_User.Name, i_User.Birthday, age, nextBirthday, i_User.Gende
             i_Control.Text = personalData;
         }
 
-        internal static void ShowPhotoOfSelectedItem(ListBox i_ListBox, PictureBox i_PictureBox)
+        public static void ShowPhotoOfSelectedItem(ListBox i_ListBox, PictureBox i_PictureBox)
         {
             if (i_ListBox.SelectedItems.Count == 1)
             {
@@ -102,7 +102,7 @@ Zodiac sign: {8}", i_User.Name, i_User.Birthday, age, nextBirthday, i_User.Gende
             }
         }
 
-        internal static void HelpMessage()
+        public static void HelpMessage()
         {
             string helpMessage = "Welcome to Our App - Help Guide\n\n" +
                             "Home Page:\n\n" +
