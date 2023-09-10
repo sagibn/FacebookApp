@@ -11,6 +11,7 @@ namespace BasicFacebookFeatures.Logic
         private readonly string r_SenderEmail;
         private readonly string r_SenderPassword;
         private readonly int r_smtpPort;
+        private static readonly object sr_InstanceLockContext = new object();
         public string RecipientEmail { get; set; }
         public string Subject { get; set; }
 
@@ -26,9 +27,15 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (s_Instance == null)
+                if(s_Instance == null)
                 {
-                    s_Instance = new EmailSender();
+                    lock(sr_InstanceLockContext)
+                    {
+                        if(s_Instance == null)
+                        {
+                            s_Instance = new EmailSender();
+                        }
+                    }
                 }
 
                 return s_Instance;

@@ -19,6 +19,13 @@ namespace BasicFacebookFeatures.Logic
         private FacebookObjectCollection<Group> m_SavedGroups;
         private FacebookObjectCollection<Event> m_SavedEvents;
         private PageProxy[] m_SavedFavoriteTeams;
+        private int m_NumOfPostsFetches = 0;
+        private int m_NumOfFriendsFetches = 0;
+        private int m_NumOfLikedPagesFetches = 0;
+        private int m_NumOfAlbumsFetches = 0;
+        private int m_NumOfGroupsFetches = 0;
+        private int m_NumOfEventsFetches = 0;
+        private int m_NumOfFavoriteTeamsFetches = 0;
 
         public UserProxy(User i_User)
         {
@@ -156,9 +163,10 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (m_SavedPosts.Count != m_User.Posts.Count)
+                if (++m_NumOfPostsFetches == 5)
                 {
                     m_SavedPosts = m_User.Posts;
+                    m_NumOfPostsFetches = 0;
                 }
 
                 return m_SavedPosts;
@@ -169,12 +177,14 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if(m_SavedFriends.Count != m_User.Friends.Count)
+                if(++m_NumOfFriendsFetches == 5)
                 {
                     foreach(User friend in m_User.Friends)
                     {
                         m_SavedFriends.Add(new UserProxy(friend));
                     }
+
+                    m_NumOfFriendsFetches = 0;
                 }
 
                 return m_SavedFriends;
@@ -185,12 +195,14 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (m_SavedLikedPages.Count != m_User.LikedPages.Count)
+                if (++m_NumOfLikedPagesFetches == 5)
                 {
                     foreach(Page page in m_User.LikedPages)
                     {
                         m_SavedLikedPages.Add(new PageProxy(page));
                     }
+
+                    m_NumOfLikedPagesFetches = 0;
                 }
 
                 return m_SavedLikedPages;
@@ -201,9 +213,10 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (m_SavedAlbums.Count != m_User.Albums.Count)
+                if (++m_NumOfAlbumsFetches == 5)
                 {
                     m_SavedAlbums = m_User.Albums;
+                    m_NumOfAlbumsFetches = 0;
                 }
 
                 return m_SavedAlbums;
@@ -214,9 +227,10 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (m_SavedGroups.Count != m_User.Groups.Count)
+                if (++m_NumOfGroupsFetches == 5)
                 {
                     m_SavedGroups = m_User.Groups;
+                    m_NumOfGroupsFetches = 0;
                 }
 
                 return m_SavedGroups;
@@ -227,9 +241,10 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (m_SavedEvents.Count != m_User.Events.Count)
+                if (++m_NumOfEventsFetches == 5)
                 {
                     m_SavedEvents = m_User.Events;
+                    m_NumOfEventsFetches = 0;
                 }
 
                 return m_SavedEvents;
@@ -240,9 +255,10 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (m_SavedFavoriteTeams.Length != m_User.FavofriteTeams.Length)
+                if (++m_NumOfFavoriteTeamsFetches == 5)
                 {
                     m_SavedFavoriteTeams = new PageProxy[m_User.FavofriteTeams.Length];
+                    m_NumOfFavoriteTeamsFetches = 0;
                     for(int i = 0; i < m_User.FavofriteTeams.Length; i++)
                     {
                         m_SavedFavoriteTeams[i] = new PageProxy(m_User.FavofriteTeams[i]);
