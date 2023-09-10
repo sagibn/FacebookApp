@@ -19,13 +19,13 @@ namespace BasicFacebookFeatures.Logic
         private FacebookObjectCollection<Group> m_SavedGroups;
         private FacebookObjectCollection<Event> m_SavedEvents;
         private PageProxy[] m_SavedFavoriteTeams;
-        private int m_NumOfPostsFetches = 0;
-        private int m_NumOfFriendsFetches = 0;
-        private int m_NumOfLikedPagesFetches = 0;
-        private int m_NumOfAlbumsFetches = 0;
-        private int m_NumOfGroupsFetches = 0;
-        private int m_NumOfEventsFetches = 0;
-        private int m_NumOfFavoriteTeamsFetches = 0;
+        private int m_NumOfPostsFetches = -1;
+        private int m_NumOfFriendsFetches = -1;
+        private int m_NumOfLikedPagesFetches = -1;
+        private int m_NumOfAlbumsFetches = -1;
+        private int m_NumOfGroupsFetches = -1;
+        private int m_NumOfEventsFetches = -1;
+        private int m_NumOfFavoriteTeamsFetches = -1;
 
         public UserProxy(User i_User)
         {
@@ -163,10 +163,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfPostsFetches == 5)
+                if (++m_NumOfPostsFetches % 5 == 0)
                 {
                     m_SavedPosts = m_User.Posts;
-                    m_NumOfPostsFetches = 0;
                 }
 
                 return m_SavedPosts;
@@ -177,14 +176,12 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if(++m_NumOfFriendsFetches == 5)
+                if(++m_NumOfFriendsFetches % 5 == 0)
                 {
                     foreach(User friend in m_User.Friends)
                     {
                         m_SavedFriends.Add(new UserProxy(friend));
                     }
-
-                    m_NumOfFriendsFetches = 0;
                 }
 
                 return m_SavedFriends;
@@ -195,14 +192,12 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfLikedPagesFetches == 5)
+                if (++m_NumOfLikedPagesFetches % 5 == 0)
                 {
                     foreach(Page page in m_User.LikedPages)
                     {
                         m_SavedLikedPages.Add(new PageProxy(page));
                     }
-
-                    m_NumOfLikedPagesFetches = 0;
                 }
 
                 return m_SavedLikedPages;
@@ -213,10 +208,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfAlbumsFetches == 5)
+                if (++m_NumOfAlbumsFetches % 5 == 0)
                 {
                     m_SavedAlbums = m_User.Albums;
-                    m_NumOfAlbumsFetches = 0;
                 }
 
                 return m_SavedAlbums;
@@ -227,10 +221,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfGroupsFetches == 5)
+                if (++m_NumOfGroupsFetches % 5 == 0)
                 {
                     m_SavedGroups = m_User.Groups;
-                    m_NumOfGroupsFetches = 0;
                 }
 
                 return m_SavedGroups;
@@ -241,10 +234,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfEventsFetches == 5)
+                if (++m_NumOfEventsFetches % 5 == 0)
                 {
                     m_SavedEvents = m_User.Events;
-                    m_NumOfEventsFetches = 0;
                 }
 
                 return m_SavedEvents;
@@ -255,10 +247,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfFavoriteTeamsFetches == 5)
+                if (++m_NumOfFavoriteTeamsFetches % 5 == 0)
                 {
                     m_SavedFavoriteTeams = new PageProxy[m_User.FavofriteTeams.Length];
-                    m_NumOfFavoriteTeamsFetches = 0;
                     for(int i = 0; i < m_User.FavofriteTeams.Length; i++)
                     {
                         m_SavedFavoriteTeams[i] = new PageProxy(m_User.FavofriteTeams[i]);

@@ -14,8 +14,8 @@ namespace BasicFacebookFeatures.Logic
         private Page m_Page;
         private FacebookObjectCollection<Checkin> m_SavedCheckins;
         private FacebookObjectCollection<Post> m_SavedPosts;
-        private int m_NumOfCheckinsFetches = 0;
-        private int m_NumOfPostsFetches = 0;
+        private int m_NumOfCheckinsFetches = -1;
+        private int m_NumOfPostsFetches = -1;
 
         public PageProxy(Page i_Page)
         {
@@ -28,10 +28,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfCheckinsFetches == 5)
+                if (++m_NumOfCheckinsFetches % 5 == 0)
                 {
                     m_SavedCheckins = m_Page.Checkins;
-                    m_NumOfCheckinsFetches = 0;
                 }
 
                 return m_SavedCheckins;
@@ -42,10 +41,9 @@ namespace BasicFacebookFeatures.Logic
         {
             get
             {
-                if (++m_NumOfPostsFetches == 5)
+                if (++m_NumOfPostsFetches % 5 == 0)
                 {
                     m_SavedPosts = m_Page.Posts;
-                    m_NumOfPostsFetches = 0;
                 }
 
                 return m_SavedPosts;
