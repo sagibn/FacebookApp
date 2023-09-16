@@ -1,0 +1,38 @@
+<Language>
+	<tabPageHome>Home</tabPageHome>
+	<locationLabel>Location:</locationLabel>
+	<label1>Selected album</label1>
+	<createdTimeLabel>Created Time:</createdTimeLabel>
+	<descriptionLabel1>Description:</descriptionLabel1>
+	<nameLabel4>Name:</nameLabel4>
+	<buttonNewPost>Post</buttonNewPost>
+	<labelNewPost>Share your thoughts here:</labelNewPost>
+	<checkBoxRememberMe>Remember me</checkBoxRememberMe>
+	<buttonFriends>Show list of friends</buttonFriends>
+	<buttonAlbums>Show list of albums</buttonAlbums>
+	<buttonPages>Show list of liked pages</buttonPages>
+	<buttonLogout>Logout</buttonLogout>
+	<tabPageProfile>Profile</tabPageProfile>
+	<descriptionLabel>Description:</descriptionLabel>
+	<linkLabel>Link:</linkLabel>
+	<nameLabel>Name:</nameLabel>
+	<privacyLabel>Privacy:</privacyLabel>
+	<labelSelectedGroup>Selected Group</labelSelectedGroup>
+	<buttonGroups>Show list of groups</buttonGroups>
+	<buttonLikedFriends>Show your most supporters</buttonLikedFriends>
+	<buttonPosts>Show my posts</buttonPosts>
+	<buttonEmail>Send</buttonEmail>
+	<textBoxEmailBody>--write your message here--</textBoxEmailBody>
+	<textBoxEmailSubject>--subject--</textBoxEmailSubject>
+	<textBoxEmailSender>Email Reminder</textBoxEmailSender>
+	<personalData>About myself:
+Name: {0}
+Birthday: {1}
+Age: {2}
+Next birthday in: {3} days 
+Gender: {4}
+Email: {5}
+Relationship: {6}
+My location: {7}
+Zodiac sign: {8}</personalData>
+</Language>

@@ -19,6 +19,7 @@ namespace BasicFacebookFeatures
         public string UserAccessToken { get; set; }
         public bool RememberUser { get; set; }
         public string FontName { get; set; }
+        public string Language { get; set; }
 
         private Settings()
         {
@@ -28,6 +29,7 @@ namespace BasicFacebookFeatures
             UserAccessToken = "";
             FontName = "Microsoft Sans Serif";
             s_XmlFilePath = $"{GetSolutionRoot()}\\FacebookWinFormsApp\\settings.xml";
+            Language = "en-US";
         }
 
         public static Settings Instance

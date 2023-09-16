@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
 using BasicFacebookFeatures.Logic;
+using System.Xml;
 
 namespace BasicFacebookFeatures
 {
@@ -49,33 +50,35 @@ namespace BasicFacebookFeatures
             MessageBox.Show("Must login to use this feature", "Error", MessageBoxButtons.OK);
         }
 
-        public static void FetchPersonalData(UserProxy i_User, Control i_Control)
+        public static void FetchPersonalData(UserProxy i_User, Control i_Control, string i_LanguageCode)
         {
             int? age = null;
             int? nextBirthday = null;
             string zodiacSign = string.Empty;
+            string strFormat = string.Empty;
             try
             {
                 BirthdayAdapter birthday = new BirthdayAdapter(i_User.Birthday);
+                XmlDocument xmlDoc = new XmlDocument();
+
+                xmlDoc.Load($"{Settings.GetSolutionRoot()}\\FacebookWinFormsApp\\Language\\{i_LanguageCode}.xml");
+                XmlNode node = xmlDoc.SelectSingleNode($"//Language/personalData");
+
                 age = birthday.Age();
                 nextBirthday = birthday.NextBirthdayInDays();
                 zodiacSign = birthday.GetZodiacSign();
+
+                if(node != null)
+                {
+                    strFormat = node.InnerText;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
             }
 
-            string personalData = string.Format(@"About myself:
-Name: {0}
-Birthday: {1}
-Age: {2}
-Next birthday in: {3} days 
-Gender: {4}
-Email: {5}
-Relationship: {6}
-My location: {7}
-Zodiac sign: {8}", i_User.Name, i_User.Birthday, age, nextBirthday, i_User.Gender,
+            string personalData = string.Format(strFormat, i_User.Name, i_User.Birthday, age, nextBirthday, i_User.Gender,
                     i_User.Email, i_User.RelationshipStatus, i_User.Location.Name, zodiacSign);
 
             i_Control.Text = personalData;

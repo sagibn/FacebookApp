@@ -1,0 +1,38 @@
+<Language>
+	<tabPageHome>דף ראשי</tabPageHome>
+	<locationLabel>מיקום:</locationLabel>
+	<label1>אלבום נבחר</label1>
+	<createdTimeLabel>נוצר ב:</createdTimeLabel>
+	<descriptionLabel1>תיאור:</descriptionLabel1>
+	<nameLabel4>שם:</nameLabel4>
+	<buttonNewPost>פרסם</buttonNewPost>
+	<labelNewPost>:שתף את המחשבות שלך</labelNewPost>
+	<checkBoxRememberMe>תזכור אותי</checkBoxRememberMe>
+	<buttonFriends>הצג רשימת חברים</buttonFriends>
+	<buttonAlbums>הצג רשימת אלבומים</buttonAlbums>
+	<buttonPages>הצג רשימת דפים אהובים</buttonPages>
+	<buttonLogout>התנתק</buttonLogout>
+	<tabPageProfile>פרופיל</tabPageProfile>
+	<descriptionLabel>תיאור:</descriptionLabel>
+	<linkLabel>קישור:</linkLabel>
+	<nameLabel>שם:</nameLabel>
+	<privacyLabel>פרטיות:</privacyLabel>
+	<labelSelectedGroup>קבוצה נבחרת</labelSelectedGroup>
+	<buttonGroups>הצג רשימת קבוצות</buttonGroups>
+	<buttonLikedFriends>הצג את כל התומכים שלך</buttonLikedFriends>
+	<buttonPosts>הצג את הפוסטים שלך</buttonPosts>
+	<buttonEmail>שלח</buttonEmail>
+	<textBoxEmailBody>--כתוב כאן את ההודעה--</textBoxEmailBody>
+	<textBoxEmailSubject>--נושא--</textBoxEmailSubject>
+	<textBoxEmailSender>שליחת תזכורת לאימייל</textBoxEmailSender>
+	<personalData>                 :קצת על עצמי
+{0}            :שם
+{1}       :יום הולדת
+{2}                        :גיל
+יום ההולדת הבא בעוד: {3} ימים
+{4}                      :מין
+{5}    :אימייל
+{6}           :מערכת יחסים
+מיקום:                            {7}
+{8}                   :מזל</personalData>
+</Language>

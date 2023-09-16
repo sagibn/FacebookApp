@@ -11,6 +11,7 @@ using FacebookWrapper;
 using System.Threading;
 using System.Diagnostics;
 using BasicFacebookFeatures.Logic;
+using System.Xml;
 
 namespace BasicFacebookFeatures
 {
@@ -19,6 +20,7 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         private UserProxy m_User;
         private Settings m_Settings;
+        private ILanguageStrategy m_LanguageStrategy;
         public FormMain(LoginResult i_loginResult, User i_User)
         {
             m_LoginResult = i_loginResult;
@@ -27,6 +29,7 @@ namespace BasicFacebookFeatures
             InitializeComponent();
             this.checkBoxRememberMe.Checked = m_Settings.RememberUser;
             applyFontByName(m_Settings.FontName);
+            m_LanguageStrategy = LanguageFactory.Create(m_Settings.Language);
             this.Size = new Size(m_Settings.LastWindowSize.Width, m_Settings.LastWindowSize.Height);
         }
 
@@ -47,14 +50,18 @@ namespace BasicFacebookFeatures
                                                 (m_User != null) ? m_User.Friends : null)).Start();
             new Thread(() => FormHelper.FetchFacebookItem(listBoxPages,
                                                 (m_User != null) ? m_User.LikedPages : null)).Start();
-            new Thread(() => FormHelper.FetchPersonalData(m_User, labelData)).Start();
+            new Thread(() => FormHelper.FetchPersonalData(m_User, labelData, m_LanguageStrategy.Execute())).Start();
             this.Invoke(new Action(() => this.Text = $"Connected as {m_User.Name}"));
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            new Thread(completeUIFromFacebookData).Start();
+            new Thread(() =>
+            {
+                completeUIFromFacebookData();
+                loadLanguage(m_LanguageStrategy.Execute());
+            }).Start();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -64,6 +71,7 @@ namespace BasicFacebookFeatures
                 ? m_LoginResult.AccessToken : null;
             m_Settings.LastWindowSize = this.Size;
             m_Settings.FontName = this.Font.Name;
+            m_Settings.Language = m_LanguageStrategy.Execute();
             m_Settings.SaveSettingsToFile();
             base.OnFormClosing(e);
         }
@@ -86,10 +94,12 @@ namespace BasicFacebookFeatures
 
         private void emailButton_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => {
-            sendEmail();
-            textBoxEmailSubject.Invoke(new Action(() => textBoxEmailSubject.Text = "--subject--"));
-            textBoxEmailBody.Invoke(new Action(() => textBoxEmailBody.Text = "--write your message here--")); });
+            Thread thread = new Thread(() =>
+            {
+                sendEmail();
+                textBoxEmailSubject.Invoke(new Action(() => textBoxEmailSubject.Text = "--subject--"));
+                textBoxEmailBody.Invoke(new Action(() => textBoxEmailBody.Text = "--write your message here--"));
+            });
 
             thread.Start();
         }
@@ -140,7 +150,7 @@ namespace BasicFacebookFeatures
 
             try
             {
-                if (m_User != null) 
+                if (m_User != null)
                 {
                     foreach (Post post in m_User.Posts)
                     {
@@ -176,7 +186,7 @@ namespace BasicFacebookFeatures
 
         private void buttonPosts_Click(object sender, EventArgs e)
         {
-           new Thread(fetchPosts).Start();
+            new Thread(fetchPosts).Start();
         }
 
         private Dictionary<IFacebookObjectProxy, int> getListOfMostLikedFriends()
@@ -347,7 +357,7 @@ namespace BasicFacebookFeatures
                 Status postedStatus = m_User.PostStatus(textBoxNewPost.Text);
                 MessageBox.Show("Status posted successfully.\nID: " + postedStatus.Id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
             }
@@ -373,7 +383,7 @@ namespace BasicFacebookFeatures
 
                 Process.Start(new ProcessStartInfo(mailtoUri));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
             }
@@ -391,11 +401,11 @@ namespace BasicFacebookFeatures
 
         private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listBoxGroups.SelectedItems.Count == 1)
+            if (listBoxGroups.SelectedItems.Count == 1)
             {
                 Group selectedGroup = listBoxGroups.SelectedItem as Group;
 
-                if(selectedGroup.Id != null)
+                if (selectedGroup.Id != null)
                 {
                     linkGroup.Text = $"www.facebook.com/groups/{selectedGroup.Id}";
                 }
@@ -419,6 +429,68 @@ namespace BasicFacebookFeatures
                     }
                 }
             }
+        }
+
+        private void changeLanguage(Control i_Control, XmlDocument i_XmlDoc)
+        {
+            XmlNode node = i_XmlDoc.SelectSingleNode($"//Language/{i_Control.Name}");
+
+            if (node != null)
+            {
+                i_Control.Invoke(new Action(() => i_Control.Text = node.InnerText));
+            }
+
+            foreach(Control childControl in i_Control.Controls)
+            {
+                changeLanguage(childControl, i_XmlDoc);
+            }
+        }
+
+        private void loadLanguage(string i_LanguageCode)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.Load($"{Settings.GetSolutionRoot()}\\FacebookWinFormsApp\\Language\\{i_LanguageCode}.xml");
+
+            foreach(Control control in Controls)
+            {
+                changeLanguage(control, xmlDoc);
+            }
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_LanguageStrategy = LanguageFactory.Create("en-US");
+            markLanguageToolStrip(sender);
+        }
+
+        private void markLanguageToolStrip(object sender)
+        {
+            foreach (ToolStripMenuItem menuItem in languageToolStripMenuItem.DropDownItems)
+            {
+                if (menuItem == sender)
+                {
+                    menuItem.Checked = true;
+                }
+                else
+                {
+                    menuItem.Checked = false;
+                }
+            }
+
+            applyToolStripMenuItem.Enabled = true;
+        }
+
+        private void applyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loadLanguage(m_LanguageStrategy.Execute());
+            FormHelper.FetchPersonalData(m_User, labelData, m_LanguageStrategy.Execute());
+        }
+
+        private void hebrewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_LanguageStrategy = LanguageFactory.Create("he-IL");
+            markLanguageToolStrip(sender);
         }
     }
 }
