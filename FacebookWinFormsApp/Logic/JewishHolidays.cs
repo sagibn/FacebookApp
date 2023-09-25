@@ -30,30 +30,31 @@ namespace BasicFacebookFeatures.Logic
 
         public async Task GetJewishHolidaysAsync()
         {
-            using (HttpClient client = new HttpClient())
+            using(HttpClient client = new HttpClient())
             {
                 string apiEndpoint = "https://www.hebcal.com/hebcal";
                 string parameters = "?cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=x&ss=on&mf=on";
 
                 HttpResponseMessage response = await client.GetAsync(apiEndpoint + parameters);
 
-                if (response.IsSuccessStatusCode)
+                if(response.IsSuccessStatusCode)
                 {
                     string jsonString = await response.Content.ReadAsStringAsync();
                     JObject jsonObject = JObject.Parse(jsonString);
-                    insertDataInDictionary(jsonObject);
+
+                    parseImportantEvents(jsonObject);
                 }
             }
         }
 
-        private void insertDataInDictionary(JObject jsonObject)
+        private void parseImportantEvents(JObject i_JsonObject)
         {
-            foreach (JToken item in jsonObject["items"])
+            foreach(var item in i_JsonObject["items"])
             {
                 string title = item.Value<string>("title");
                 DateTime date = item.Value<DateTime>("date");
 
-                if (isImportantEvent(title))
+                if(isImportantEvent(title))
                 {
                     m_Holidays[title] = date;
                 }

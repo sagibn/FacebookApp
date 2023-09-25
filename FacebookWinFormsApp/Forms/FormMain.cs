@@ -53,7 +53,7 @@ namespace BasicFacebookFeatures
                                                 (m_User != null) ? m_User.Friends : null)).Start();
             new Thread(() => FormHelper.FetchFacebookItem(listBoxPages,
                                                 (m_User != null) ? m_User.LikedPages : null)).Start();
-            new Thread(() => FormHelper.FetchPersonalData(m_User, labelData, m_LanguageStrategy.Execute())).Start();
+            new Thread(() => FormHelper.FetchPersonalData(m_User, labelData, m_LanguageStrategy.Execute().Key)).Start();
             this.Invoke(new Action(() => this.Text = $"Connected as {m_User.Name}"));
         }
 
@@ -63,7 +63,8 @@ namespace BasicFacebookFeatures
             new Thread(() =>
             {
                 completeUIFromFacebookData();
-                loadLanguage(m_LanguageStrategy.Execute());
+                loadLanguage(m_LanguageStrategy.Execute().Key);
+                labelData.TextAlign = m_LanguageStrategy.Execute().Value;
                 loadHolidays();
             }).Start();
         }
@@ -85,7 +86,7 @@ namespace BasicFacebookFeatures
                 ? m_LoginResult.AccessToken : null;
             m_Settings.LastWindowSize = this.Size;
             m_Settings.FontName = this.Font.Name;
-            m_Settings.Language = m_LanguageStrategy.Execute();
+            m_Settings.Language = m_LanguageStrategy.Execute().Key;
             m_Settings.SaveSettingsToFile();
             base.OnFormClosing(e);
         }
@@ -503,8 +504,11 @@ namespace BasicFacebookFeatures
 
         private void applyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            loadLanguage(m_LanguageStrategy.Execute());
-            FormHelper.FetchPersonalData(m_User, labelData, m_LanguageStrategy.Execute());
+            KeyValuePair<string, ContentAlignment> language = m_LanguageStrategy.Execute();
+
+            loadLanguage(language.Key);
+            FormHelper.FetchPersonalData(m_User, labelData, language.Key);
+            labelData.TextAlign = language.Value;
         }
     }
 }
