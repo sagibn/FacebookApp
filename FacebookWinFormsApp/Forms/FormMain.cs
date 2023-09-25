@@ -21,6 +21,7 @@ namespace BasicFacebookFeatures
         private UserProxy m_User;
         private Settings m_Settings;
         private ILanguageStrategy m_LanguageStrategy;
+        private JewishHolidays m_Holidays;
         public FormMain(LoginResult i_loginResult, User i_User)
         {
             m_LoginResult = i_loginResult;
@@ -31,6 +32,8 @@ namespace BasicFacebookFeatures
             applyFontByName(m_Settings.FontName);
             m_LanguageStrategy = LanguageFactory.Create(m_Settings.Language);
             this.Size = new Size(m_Settings.LastWindowSize.Width, m_Settings.LastWindowSize.Height);
+            m_Holidays = new JewishHolidays();
+            _ = m_Holidays.GetJewishHolidaysAsync();
         }
 
         private void applyFontByName(string i_FontName)
@@ -61,7 +64,18 @@ namespace BasicFacebookFeatures
             {
                 completeUIFromFacebookData();
                 loadLanguage(m_LanguageStrategy.Execute());
+                loadHolidays();
             }).Start();
+        }
+
+        private void loadHolidays()
+        {
+            listBoxHolidays.Items.Clear();
+
+            foreach(var holiday in m_Holidays)
+            {
+                listBoxHolidays.Items.Add($"{holiday.Key}: {holiday.Value.Month}/{holiday.Value.Day}/{holiday.Value.Year}");
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -464,6 +478,12 @@ namespace BasicFacebookFeatures
             markLanguageToolStrip(sender);
         }
 
+        private void hebrewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_LanguageStrategy = LanguageFactory.Create("he-IL");
+            markLanguageToolStrip(sender);
+        }
+
         private void markLanguageToolStrip(object sender)
         {
             foreach (ToolStripMenuItem menuItem in languageToolStripMenuItem.DropDownItems)
@@ -485,12 +505,6 @@ namespace BasicFacebookFeatures
         {
             loadLanguage(m_LanguageStrategy.Execute());
             FormHelper.FetchPersonalData(m_User, labelData, m_LanguageStrategy.Execute());
-        }
-
-        private void hebrewToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            m_LanguageStrategy = LanguageFactory.Create("he-IL");
-            markLanguageToolStrip(sender);
         }
     }
 }

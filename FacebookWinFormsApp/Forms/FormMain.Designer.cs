@@ -40,6 +40,7 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHome = new System.Windows.Forms.TabPage();
+            this.facebookLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.locationLabel1 = new System.Windows.Forms.Label();
             this.albumBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -54,7 +55,6 @@
             this.pictureBoxPages = new System.Windows.Forms.PictureBox();
             this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
             this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
-            this.facebookLogo = new System.Windows.Forms.PictureBox();
             this.buttonFriends = new System.Windows.Forms.Button();
             this.buttonAlbums = new System.Windows.Forms.Button();
             this.buttonPages = new System.Windows.Forms.Button();
@@ -68,6 +68,10 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hebrewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBoxPages = new System.Windows.Forms.ListBox();
             this.listBoxAlbums = new System.Windows.Forms.ListBox();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
@@ -92,10 +96,8 @@
             this.textBoxEmailBody = new System.Windows.Forms.TextBox();
             this.textBoxEmailSubject = new System.Windows.Forms.TextBox();
             this.textBoxEmailSender = new System.Windows.Forms.TextBox();
-            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hebrewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelHolidays = new System.Windows.Forms.Label();
+            this.listBoxHolidays = new System.Windows.Forms.ListBox();
             descriptionLabel = new System.Windows.Forms.Label();
             linkLabel = new System.Windows.Forms.Label();
             nameLabel = new System.Windows.Forms.Label();
@@ -106,12 +108,12 @@
             locationLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageHome.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageAlbumPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPages)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriends)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPageProfile.SuspendLayout();
@@ -228,6 +230,7 @@
             // tabPageHome
             // 
             this.tabPageHome.BackColor = System.Drawing.Color.Transparent;
+            this.tabPageHome.Controls.Add(this.facebookLogo);
             this.tabPageHome.Controls.Add(this.panel1);
             this.tabPageHome.Controls.Add(this.buttonNewPost);
             this.tabPageHome.Controls.Add(this.textBoxNewPost);
@@ -235,7 +238,6 @@
             this.tabPageHome.Controls.Add(this.pictureBoxPages);
             this.tabPageHome.Controls.Add(this.pictureBoxFriends);
             this.tabPageHome.Controls.Add(this.checkBoxRememberMe);
-            this.tabPageHome.Controls.Add(this.facebookLogo);
             this.tabPageHome.Controls.Add(this.buttonFriends);
             this.tabPageHome.Controls.Add(this.buttonAlbums);
             this.tabPageHome.Controls.Add(this.buttonPages);
@@ -251,6 +253,16 @@
             this.tabPageHome.Size = new System.Drawing.Size(1235, 658);
             this.tabPageHome.TabIndex = 0;
             this.tabPageHome.Text = "Home";
+            // 
+            // facebookLogo
+            // 
+            this.facebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
+            this.facebookLogo.Location = new System.Drawing.Point(1105, 39);
+            this.facebookLogo.Name = "facebookLogo";
+            this.facebookLogo.Size = new System.Drawing.Size(130, 130);
+            this.facebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.facebookLogo.TabIndex = 64;
+            this.facebookLogo.TabStop = false;
             // 
             // panel1
             // 
@@ -387,15 +399,6 @@
             this.checkBoxRememberMe.Text = "Remember me";
             this.checkBoxRememberMe.UseVisualStyleBackColor = true;
             // 
-            // facebookLogo
-            // 
-            this.facebookLogo.Location = new System.Drawing.Point(1105, 39);
-            this.facebookLogo.Name = "facebookLogo";
-            this.facebookLogo.Size = new System.Drawing.Size(130, 130);
-            this.facebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.facebookLogo.TabIndex = 64;
-            this.facebookLogo.TabStop = false;
-            // 
             // buttonFriends
             // 
             this.buttonFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -440,7 +443,6 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
@@ -516,6 +518,38 @@
             this.sendFeedbackToolStripMenuItem.Text = "Send Feedback";
             this.sendFeedbackToolStripMenuItem.Click += new System.EventHandler(this.sendFeedbackToolStripMenuItem_Click);
             // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.englishToolStripMenuItem,
+            this.hebrewToolStripMenuItem,
+            this.applyToolStripMenuItem});
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(105, 29);
+            this.languageToolStripMenuItem.Text = "Language";
+            // 
+            // englishToolStripMenuItem
+            // 
+            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(175, 34);
+            this.englishToolStripMenuItem.Text = "English";
+            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
+            // 
+            // hebrewToolStripMenuItem
+            // 
+            this.hebrewToolStripMenuItem.Name = "hebrewToolStripMenuItem";
+            this.hebrewToolStripMenuItem.Size = new System.Drawing.Size(175, 34);
+            this.hebrewToolStripMenuItem.Text = "Hebrew";
+            this.hebrewToolStripMenuItem.Click += new System.EventHandler(this.hebrewToolStripMenuItem_Click);
+            // 
+            // applyToolStripMenuItem
+            // 
+            this.applyToolStripMenuItem.Enabled = false;
+            this.applyToolStripMenuItem.Name = "applyToolStripMenuItem";
+            this.applyToolStripMenuItem.Size = new System.Drawing.Size(175, 34);
+            this.applyToolStripMenuItem.Text = "Apply";
+            this.applyToolStripMenuItem.Click += new System.EventHandler(this.applyToolStripMenuItem_Click);
+            // 
             // listBoxPages
             // 
             this.listBoxPages.FormattingEnabled = true;
@@ -550,6 +584,8 @@
             // 
             // tabPageProfile
             // 
+            this.tabPageProfile.Controls.Add(this.listBoxHolidays);
+            this.tabPageProfile.Controls.Add(this.labelHolidays);
             this.tabPageProfile.Controls.Add(this.panelSelectedEvent);
             this.tabPageProfile.Controls.Add(this.listBoxPosts);
             this.tabPageProfile.Controls.Add(this.buttonGroups);
@@ -657,13 +693,13 @@
             this.listBoxPosts.ItemHeight = 26;
             this.listBoxPosts.Location = new System.Drawing.Point(376, 82);
             this.listBoxPosts.Name = "listBoxPosts";
-            this.listBoxPosts.Size = new System.Drawing.Size(443, 186);
+            this.listBoxPosts.Size = new System.Drawing.Size(443, 134);
             this.listBoxPosts.TabIndex = 0;
             // 
             // buttonGroups
             // 
             this.buttonGroups.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGroups.Location = new System.Drawing.Point(352, 305);
+            this.buttonGroups.Location = new System.Drawing.Point(352, 234);
             this.buttonGroups.Name = "buttonGroups";
             this.buttonGroups.Size = new System.Drawing.Size(212, 35);
             this.buttonGroups.TabIndex = 75;
@@ -673,6 +709,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = global::BasicFacebookFeatures.Properties.Resources.FacebookLogo;
             this.pictureBox1.Location = new System.Drawing.Point(1105, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(130, 130);
@@ -686,7 +723,7 @@
             this.listBoxGroups.DisplayMember = "Name";
             this.listBoxGroups.FormattingEnabled = true;
             this.listBoxGroups.ItemHeight = 26;
-            this.listBoxGroups.Location = new System.Drawing.Point(352, 346);
+            this.listBoxGroups.Location = new System.Drawing.Point(352, 275);
             this.listBoxGroups.Name = "listBoxGroups";
             this.listBoxGroups.Size = new System.Drawing.Size(268, 160);
             this.listBoxGroups.TabIndex = 74;
@@ -718,7 +755,7 @@
             this.listBoxLikedFriends.ItemHeight = 26;
             this.listBoxLikedFriends.Location = new System.Drawing.Point(847, 82);
             this.listBoxLikedFriends.Name = "listBoxLikedFriends";
-            this.listBoxLikedFriends.Size = new System.Drawing.Size(238, 186);
+            this.listBoxLikedFriends.Size = new System.Drawing.Size(238, 134);
             this.listBoxLikedFriends.TabIndex = 62;
             // 
             // buttonPosts
@@ -734,7 +771,7 @@
             // buttonEmail
             // 
             this.buttonEmail.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.buttonEmail.Location = new System.Drawing.Point(1118, 470);
+            this.buttonEmail.Location = new System.Drawing.Point(1118, 399);
             this.buttonEmail.Name = "buttonEmail";
             this.buttonEmail.Size = new System.Drawing.Size(89, 36);
             this.buttonEmail.TabIndex = 68;
@@ -744,7 +781,7 @@
             // 
             // textBoxEmailBody
             // 
-            this.textBoxEmailBody.Location = new System.Drawing.Point(632, 380);
+            this.textBoxEmailBody.Location = new System.Drawing.Point(632, 309);
             this.textBoxEmailBody.Multiline = true;
             this.textBoxEmailBody.Name = "textBoxEmailBody";
             this.textBoxEmailBody.Size = new System.Drawing.Size(575, 126);
@@ -753,7 +790,7 @@
             // 
             // textBoxEmailSubject
             // 
-            this.textBoxEmailSubject.Location = new System.Drawing.Point(632, 342);
+            this.textBoxEmailSubject.Location = new System.Drawing.Point(632, 271);
             this.textBoxEmailSubject.Name = "textBoxEmailSubject";
             this.textBoxEmailSubject.Size = new System.Drawing.Size(161, 32);
             this.textBoxEmailSubject.TabIndex = 69;
@@ -762,7 +799,7 @@
             // textBoxEmailSender
             // 
             this.textBoxEmailSender.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.textBoxEmailSender.Location = new System.Drawing.Point(632, 305);
+            this.textBoxEmailSender.Location = new System.Drawing.Point(632, 234);
             this.textBoxEmailSender.Multiline = true;
             this.textBoxEmailSender.Name = "textBoxEmailSender";
             this.textBoxEmailSender.ReadOnly = true;
@@ -771,37 +808,23 @@
             this.textBoxEmailSender.Text = "Email Reminder";
             this.textBoxEmailSender.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // languageToolStripMenuItem
+            // labelHolidays
             // 
-            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.englishToolStripMenuItem,
-            this.hebrewToolStripMenuItem,
-            this.applyToolStripMenuItem});
-            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(105, 29);
-            this.languageToolStripMenuItem.Text = "Language";
+            this.labelHolidays.AutoSize = true;
+            this.labelHolidays.Location = new System.Drawing.Point(352, 438);
+            this.labelHolidays.Name = "labelHolidays";
+            this.labelHolidays.Size = new System.Drawing.Size(175, 26);
+            this.labelHolidays.TabIndex = 78;
+            this.labelHolidays.Text = "Jewish Holidays:";
             // 
-            // englishToolStripMenuItem
+            // listBoxHolidays
             // 
-            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
-            this.englishToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.englishToolStripMenuItem.Text = "English";
-            this.englishToolStripMenuItem.Click += new System.EventHandler(this.englishToolStripMenuItem_Click);
-            // 
-            // hebrewToolStripMenuItem
-            // 
-            this.hebrewToolStripMenuItem.Name = "hebrewToolStripMenuItem";
-            this.hebrewToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.hebrewToolStripMenuItem.Text = "Hebrew";
-            this.hebrewToolStripMenuItem.Click += new System.EventHandler(this.hebrewToolStripMenuItem_Click);
-            // 
-            // applyToolStripMenuItem
-            // 
-            this.applyToolStripMenuItem.Enabled = false;
-            this.applyToolStripMenuItem.Name = "applyToolStripMenuItem";
-            this.applyToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.applyToolStripMenuItem.Text = "Apply";
-            this.applyToolStripMenuItem.Click += new System.EventHandler(this.applyToolStripMenuItem_Click);
+            this.listBoxHolidays.FormattingEnabled = true;
+            this.listBoxHolidays.ItemHeight = 26;
+            this.listBoxHolidays.Location = new System.Drawing.Point(357, 467);
+            this.listBoxHolidays.Name = "listBoxHolidays";
+            this.listBoxHolidays.Size = new System.Drawing.Size(300, 134);
+            this.listBoxHolidays.TabIndex = 79;
             // 
             // FormMain
             // 
@@ -819,13 +842,13 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageHome.ResumeLayout(false);
             this.tabPageHome.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageAlbumPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPages)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriends)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facebookLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -874,7 +897,6 @@
         private System.Windows.Forms.ToolStripMenuItem viewHelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
         private System.Windows.Forms.Button buttonNewPost;
-        private System.Windows.Forms.TextBox textBoxNewPost;
         private System.Windows.Forms.Label labelNewPost;
         private System.Windows.Forms.Button buttonGroups;
         private System.Windows.Forms.ListBox listBoxGroups;
@@ -900,6 +922,9 @@
         private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hebrewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBoxNewPost;
+        private System.Windows.Forms.ListBox listBoxHolidays;
+        private System.Windows.Forms.Label labelHolidays;
     }
 }
 
