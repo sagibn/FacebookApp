@@ -510,5 +510,36 @@ namespace BasicFacebookFeatures
             FormHelper.FetchPersonalData(m_User, labelData, language.Key);
             labelData.TextAlign = language.Value;
         }
+
+        private void buttonSortName_Click(object sender, EventArgs e)
+        {
+            NameSorter sorter = new NameSorter();
+
+            new Thread(() => sortPages(sorter)).Start();
+        }
+
+        private void sortPages(NameSorter i_Sorter)
+        {
+            FacebookObjectCollection<PageProxy> collection = i_Sorter.MergeSort(m_User.LikedPages);
+
+            listBoxPages.Invoke(new Action(() => listBoxPages.Items.Clear()));
+            listBoxPages.Invoke(new Action(() => listBoxPages.DisplayMember = "Name"));
+            foreach (PageProxy page in collection)
+            {
+                listBoxPages.Invoke(new Action(() => listBoxPages.Items.Add(page)));
+            }
+
+            if (listBoxPages.Items.Count == 0)
+            {
+                MessageBox.Show($"No items available", "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private void buttonSortLikes_Click(object sender, EventArgs e)
+        {
+            NumberLikesSorter sorter = new NumberLikesSorter();
+
+            new Thread(() => sortPages(sorter)).Start();
+        }
     }
 }

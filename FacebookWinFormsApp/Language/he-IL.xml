@@ -36,4 +36,7 @@
 מיקום:                            {7}
 {8}                   :מזל</personalData>
 	<labelHolidays>:חגים ומועדים</labelHolidays>
+	<labelSort>:מיון על ידי</labelSort>
+	<buttonSortLikes>מספר לייקים</buttonSortLikes>
+	<buttonSortName>שמות</buttonSortName>
 </Language>

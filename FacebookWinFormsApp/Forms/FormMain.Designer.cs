@@ -40,6 +40,9 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHome = new System.Windows.Forms.TabPage();
+            this.buttonSortName = new System.Windows.Forms.Button();
+            this.buttonSortLikes = new System.Windows.Forms.Button();
+            this.labelSort = new System.Windows.Forms.Label();
             this.facebookLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.locationLabel1 = new System.Windows.Forms.Label();
@@ -76,6 +79,8 @@
             this.listBoxAlbums = new System.Windows.Forms.ListBox();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.tabPageProfile = new System.Windows.Forms.TabPage();
+            this.listBoxHolidays = new System.Windows.Forms.ListBox();
+            this.labelHolidays = new System.Windows.Forms.Label();
             this.panelSelectedEvent = new System.Windows.Forms.Panel();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -96,8 +101,6 @@
             this.textBoxEmailBody = new System.Windows.Forms.TextBox();
             this.textBoxEmailSubject = new System.Windows.Forms.TextBox();
             this.textBoxEmailSender = new System.Windows.Forms.TextBox();
-            this.labelHolidays = new System.Windows.Forms.Label();
-            this.listBoxHolidays = new System.Windows.Forms.ListBox();
             descriptionLabel = new System.Windows.Forms.Label();
             linkLabel = new System.Windows.Forms.Label();
             nameLabel = new System.Windows.Forms.Label();
@@ -230,6 +233,9 @@
             // tabPageHome
             // 
             this.tabPageHome.BackColor = System.Drawing.Color.Transparent;
+            this.tabPageHome.Controls.Add(this.buttonSortName);
+            this.tabPageHome.Controls.Add(this.buttonSortLikes);
+            this.tabPageHome.Controls.Add(this.labelSort);
             this.tabPageHome.Controls.Add(this.facebookLogo);
             this.tabPageHome.Controls.Add(this.panel1);
             this.tabPageHome.Controls.Add(this.buttonNewPost);
@@ -253,6 +259,40 @@
             this.tabPageHome.Size = new System.Drawing.Size(1235, 658);
             this.tabPageHome.TabIndex = 0;
             this.tabPageHome.Text = "Home";
+            // 
+            // buttonSortName
+            // 
+            this.buttonSortName.BackColor = System.Drawing.Color.SteelBlue;
+            this.buttonSortName.Location = new System.Drawing.Point(18, 576);
+            this.buttonSortName.Name = "buttonSortName";
+            this.buttonSortName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonSortName.Size = new System.Drawing.Size(204, 32);
+            this.buttonSortName.TabIndex = 81;
+            this.buttonSortName.Text = "Name";
+            this.buttonSortName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonSortName.UseVisualStyleBackColor = false;
+            this.buttonSortName.Click += new System.EventHandler(this.buttonSortName_Click);
+            // 
+            // buttonSortLikes
+            // 
+            this.buttonSortLikes.BackColor = System.Drawing.Color.SteelBlue;
+            this.buttonSortLikes.Location = new System.Drawing.Point(18, 546);
+            this.buttonSortLikes.Name = "buttonSortLikes";
+            this.buttonSortLikes.Size = new System.Drawing.Size(204, 32);
+            this.buttonSortLikes.TabIndex = 80;
+            this.buttonSortLikes.Text = "Number of likes";
+            this.buttonSortLikes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSortLikes.UseVisualStyleBackColor = false;
+            this.buttonSortLikes.Click += new System.EventHandler(this.buttonSortLikes_Click);
+            // 
+            // labelSort
+            // 
+            this.labelSort.AutoSize = true;
+            this.labelSort.Location = new System.Drawing.Point(13, 523);
+            this.labelSort.Name = "labelSort";
+            this.labelSort.Size = new System.Drawing.Size(87, 26);
+            this.labelSort.TabIndex = 79;
+            this.labelSort.Text = "Sort by:";
             // 
             // facebookLogo
             // 
@@ -450,7 +490,7 @@
             this.languageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(3, 3);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1229, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1229, 36);
             this.menuStrip1.TabIndex = 74;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -605,6 +645,24 @@
             this.tabPageProfile.TabIndex = 1;
             this.tabPageProfile.Text = "Profile";
             this.tabPageProfile.UseVisualStyleBackColor = true;
+            // 
+            // listBoxHolidays
+            // 
+            this.listBoxHolidays.FormattingEnabled = true;
+            this.listBoxHolidays.ItemHeight = 26;
+            this.listBoxHolidays.Location = new System.Drawing.Point(357, 467);
+            this.listBoxHolidays.Name = "listBoxHolidays";
+            this.listBoxHolidays.Size = new System.Drawing.Size(300, 134);
+            this.listBoxHolidays.TabIndex = 79;
+            // 
+            // labelHolidays
+            // 
+            this.labelHolidays.AutoSize = true;
+            this.labelHolidays.Location = new System.Drawing.Point(352, 438);
+            this.labelHolidays.Name = "labelHolidays";
+            this.labelHolidays.Size = new System.Drawing.Size(175, 26);
+            this.labelHolidays.TabIndex = 78;
+            this.labelHolidays.Text = "Jewish Holidays:";
             // 
             // panelSelectedEvent
             // 
@@ -808,24 +866,6 @@
             this.textBoxEmailSender.Text = "Email Reminder";
             this.textBoxEmailSender.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // labelHolidays
-            // 
-            this.labelHolidays.AutoSize = true;
-            this.labelHolidays.Location = new System.Drawing.Point(352, 438);
-            this.labelHolidays.Name = "labelHolidays";
-            this.labelHolidays.Size = new System.Drawing.Size(175, 26);
-            this.labelHolidays.TabIndex = 78;
-            this.labelHolidays.Text = "Jewish Holidays:";
-            // 
-            // listBoxHolidays
-            // 
-            this.listBoxHolidays.FormattingEnabled = true;
-            this.listBoxHolidays.ItemHeight = 26;
-            this.listBoxHolidays.Location = new System.Drawing.Point(357, 467);
-            this.listBoxHolidays.Name = "listBoxHolidays";
-            this.listBoxHolidays.Size = new System.Drawing.Size(300, 134);
-            this.listBoxHolidays.TabIndex = 79;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
@@ -925,6 +965,9 @@
         private System.Windows.Forms.TextBox textBoxNewPost;
         private System.Windows.Forms.ListBox listBoxHolidays;
         private System.Windows.Forms.Label labelHolidays;
+        private System.Windows.Forms.Label labelSort;
+        private System.Windows.Forms.Button buttonSortName;
+        private System.Windows.Forms.Button buttonSortLikes;
     }
 }
 

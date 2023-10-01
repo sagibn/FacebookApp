@@ -178,7 +178,8 @@ namespace BasicFacebookFeatures.Logic
             {
                 if(++m_NumOfFriendsFetches % 5 == 0)
                 {
-                    foreach(User friend in m_User.Friends)
+                    m_SavedFriends.Clear();
+                    foreach (User friend in m_User.Friends)
                     {
                         m_SavedFriends.Add(new UserProxy(friend));
                     }
@@ -194,6 +195,7 @@ namespace BasicFacebookFeatures.Logic
             {
                 if (++m_NumOfLikedPagesFetches % 5 == 0)
                 {
+                    m_SavedLikedPages.Clear();
                     foreach(Page page in m_User.LikedPages)
                     {
                         m_SavedLikedPages.Add(new PageProxy(page));

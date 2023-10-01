@@ -36,4 +36,7 @@ Relationship: {6}
 My location: {7}
 Zodiac sign: {8}</personalData>
 	<labelHolidays>Jewish Holidays:</labelHolidays>
+	<labelSort>Sort by:</labelSort>
+	<buttonSortLikes>Number of likes</buttonSortLikes>
+	<buttonSortName>Name</buttonSortName>
 </Language>
